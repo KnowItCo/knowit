@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export Home class Explore extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
   }
