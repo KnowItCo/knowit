@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import Home from '../components/Home';
 
 export default class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -12,6 +12,10 @@ export default class App extends Component {
       <div>
         <Home />
       </div>
-    )
+    );
   }
 }
+
+App.propTypes = {
+  someData: PropTypes.String,
+};

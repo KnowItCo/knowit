@@ -8,6 +8,10 @@ export default class Home extends Component {
   render() {
     return (
       <h3> Hello World!</h3>
-    )
+    );
   }
 }
+
+Home.propTypes = {
+  someData: PropTypes.String,
+};
