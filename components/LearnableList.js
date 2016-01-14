@@ -11,9 +11,11 @@ export default class LearnableList extends Component {
     const learnablesList = learnables.map((learnable, index) => <Learnable key={index} text={learnable.text} />);
 
     return (
-      <ul>
-        {learnablesList}
-      </ul>
+      <div>
+        <ul>
+          {learnablesList}
+        </ul>
+      </div>
     );
   }
 }

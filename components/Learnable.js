@@ -16,8 +16,20 @@ export default class Learnable extends Component {
   }
 
   render() {
+    const style = {
+      backgroundColor: '#8D99AE',
+      height: 20,
+      width: 180,
+      padding: 3,
+      margin: 8,
+    };
+
     return (
-      <li>{this.props.text}</li>
+      <div className="card">
+        <div style={style}>
+          {this.props.text}
+        </div>
+      </div>
     );
   }
 }
