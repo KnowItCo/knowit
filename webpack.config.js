@@ -31,8 +31,6 @@ module.exports = {
   },
   eslint: {
     formatter: require("eslint-friendly-formatter"),
-    configFile: './.eslintrc',
-    failOnWarning: true,
-    failOnError: true
+    configFile: './.eslintrc'
   }
 }
