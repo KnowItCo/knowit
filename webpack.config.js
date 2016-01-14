@@ -15,7 +15,6 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.NoErrorsPlugin(), // removed this so we can see eslint errors
     new webpack.ProgressPlugin(function handler(percentage, msg) {
       if ((percentage * 100) % 20 === 0) {
         console.log(percentage * 100 + '%')
@@ -31,6 +30,7 @@ module.exports = {
     ]
   },
   eslint: {
+    formatter: require("eslint-friendly-formatter"),
     configFile: './.eslintrc',
     failOnWarning: true,
     failOnError: true
