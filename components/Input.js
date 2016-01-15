@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import TextField from 'material-ui/lib/text-field';
 import Button from '../components/Button';
 import TagInput from '../components/AutoComplete';
@@ -13,25 +13,37 @@ const buttonStyle = {
   paddingRight: 50,
 };
 
-const Input = () => (
-  <div>
-    <div>
-      <TextField
-        hintText="Learnable"
-        floatingLabelText="Enter a new learnable"
-        multiLine
-        style={textFieldStyle}
-      />
-    </div>
-    <div>
-      <TagInput />
-    </div>
-    <div>
-      <Button
-        style={buttonStyle}
-      />
-    </div>
-  </div>
-);
+export default class Input extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default Input;
+  render() {
+    return (
+      <div>
+        <div>
+          <TextField
+            hintText="Learnable"
+            floatingLabelText="Enter a new learnable"
+            multiLine
+            style={textFieldStyle}
+          />
+        </div>
+        <div>
+          <TagInput
+            tags={this.props.tags}
+          />
+        </div>
+        <div>
+          <Button
+            style={buttonStyle}
+          />
+        </div>
+      </div>
+    );
+  }
+}
+
+Input.propTypes = {
+  tags: PropTypes.array.isRequired,
+};

@@ -13,7 +13,7 @@ export default class LearnableList extends Component {
 
     return (
       <div>
-        <List subheader="Learables">
+        <List>
           {learnablesList}
         </List>
       </div>
@@ -22,5 +22,5 @@ export default class LearnableList extends Component {
 }
 
 LearnableList.propTypes = {
-  learnables: PropTypes.array,
+  learnables: PropTypes.array.isRequired,
 };

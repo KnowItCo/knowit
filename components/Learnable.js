@@ -62,5 +62,5 @@ export default class Learnable extends Component {
 }
 
 Learnable.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
 };

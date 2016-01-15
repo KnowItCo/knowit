@@ -34,8 +34,9 @@ export default class LeftNavBar extends Component {
           open={this.state.open}
           style={style}
         >
-          <MenuItem>Menu Item</MenuItem>
-          <MenuItem>Menu Item 2</MenuItem>
+          <MenuItem>General</MenuItem>
+          <MenuItem>Tag 1</MenuItem>
+          <MenuItem>Tag 2</MenuItem>
         </LeftNav>
       </div>
     );

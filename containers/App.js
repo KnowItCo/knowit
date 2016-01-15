@@ -15,6 +15,8 @@ export default class App extends Component {
     this.state = {
       muiTheme: ThemeManager.getMuiTheme(LightRawTheme),
       open: false,
+      learnables: data,
+      tags: ['General', 'tag1', 'tag2', 'tag3', 'tag4'],
     };
   }
 
@@ -26,8 +28,10 @@ export default class App extends Component {
 
   componentWillMount() {
     const newMuiTheme = ThemeManager.modifyRawThemePalette(this.state.muiTheme, { accent1Color: Colors.cyan100 });
+    const learnables = this.state.learnables || [];
+    const tags = this.state.tags || [];
 
-    this.setState({ muiTheme: newMuiTheme });
+    this.setState({ muiTheme: newMuiTheme, learnables, tags });
   }
 
   // componentWillMount() {
@@ -45,8 +49,10 @@ export default class App extends Component {
           <LeftNavBar />
         </div>
         <div className="col-md-8 col-xs-12">
-          <Input />
-          <LearnableList learnables={data} />
+          <Input
+            tags={this.state.tags}
+          />
+          <LearnableList learnables={this.state.learnables} />
         </div>
       </div>
     );
@@ -54,7 +60,6 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  learnables: PropTypes.array,
   updateRouterState: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
