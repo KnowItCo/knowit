@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 // import { connect } from 'react-redux';
-// import { Col, Grid, Row } from 'react-bootstrap';
 import data from '../data/learnables';
 import LearnableList from '../components/LearnableList';
 import AppBarTop from '../components/AppBar';

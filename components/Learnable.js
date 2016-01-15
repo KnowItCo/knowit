@@ -36,8 +36,8 @@ export default class Learnable extends Component {
 
     const rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem>Reply</MenuItem>
-        <MenuItem>Forward</MenuItem>
+        <MenuItem>Know It!</MenuItem>
+        <MenuItem>Edit</MenuItem>
         <MenuItem>Delete</MenuItem>
       </IconMenu>
     );
@@ -45,7 +45,7 @@ export default class Learnable extends Component {
     return (
       <div>
         <ListItem
-          leftAvatar={<Avatar src="images/logo.png" />}
+          leftAvatar={<Avatar src="../../images/logo.jpeg" />}
           rightIconButton={rightIconMenu}
           primaryText="Heading"
           secondaryText={

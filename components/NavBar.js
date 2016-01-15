@@ -21,7 +21,6 @@ export default class LeftNavBar extends Component {
 
   render() {
     const style = {
-      position: 'fixed',
       top: 64,
       zIndex: 9999,
       width: 200,
