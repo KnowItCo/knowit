@@ -26,7 +26,21 @@ module.exports = {
       { test: /\.js$/, loaders: ['eslint-loader'], exclude: /node_modules/ }
     ],
     loaders: [
-      { test: /\.js$/, loaders: [ 'babel'], exclude: /node_modules/ }
+      { test: /\.js$/, loaders: [ 'babel'], exclude: /node_modules/ },
+      { test: /\.jsx$/, loaders: [ 'babel'] },
+      { test: /\.scss$/, loaders: ['style', 'css', 'resolve-url', 'sass?sourceMap'] },
+      { test: /\.css$/, loader: "style-loader!css-loader" },
+      { test: /\.png$/, loader: 'url-loader?limit=100000' },
+      { test: /\.jpg$/, loader: 'file-loader' },
+      { test: /\.styl/, loader : 'style-loader!css-loader!stylus-loader' }
+    ]
+  },
+  sassLoader: {
+    includePaths: [path.resolve(__dirname, "/node_modules")]
+  },
+  resolve: {
+    root: [
+    path.resolve('/'),
     ]
   },
   eslint: {

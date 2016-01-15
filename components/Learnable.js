@@ -18,8 +18,10 @@ export default class Learnable extends Component {
   render() {
     const style = {
       backgroundColor: '#8D99AE',
-      height: 20,
-      width: 180,
+      height: 40,
+      width: 550,
+      borderRadius: 2,
+      boxShadow: '0 2px 3px rgba(0, 0, 0, 0.075), 0 0 0 1px rgba(0,0,0,0.1)',
       padding: 3,
       margin: 8,
     };
