@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import List from 'material-ui/lib/lists/list';
 import Learnable from './Learnable';
 
 export default class LearnableList extends Component {
@@ -12,9 +13,9 @@ export default class LearnableList extends Component {
 
     return (
       <div>
-        <ul>
+        <List subheader="Learables">
           {learnablesList}
-        </ul>
+        </List>
       </div>
     );
   }

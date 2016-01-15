@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import LeftNav from 'material-ui/lib/left-nav';
+import MenuItem from 'material-ui/lib/menus/menu-item';
 
 export default class LeftNavBar extends Component {
   constructor(props) {
@@ -10,7 +12,7 @@ export default class LeftNavBar extends Component {
   }
 
   componentWillMount() {
-    this.setState({ open: false });
+    this.setState({ open: true });
   }
 
   handleToggle() {
@@ -20,21 +22,22 @@ export default class LeftNavBar extends Component {
   render() {
     const style = {
       position: 'fixed',
-      top: 80,
-      left: 10,
+      top: 64,
       zIndex: 9999,
-      width: '20%',
+      width: 200,
       height: '100%',
       backgroundColor: 'grey',
     };
 
     return (
       <div>
-        <nav
-          className="fixed-nav-bar"
+        <LeftNav
+          open={this.state.open}
           style={style}
         >
-        </nav>
+          <MenuItem>Menu Item</MenuItem>
+          <MenuItem>Menu Item 2</MenuItem>
+        </LeftNav>
       </div>
     );
   }
