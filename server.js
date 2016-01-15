@@ -15,6 +15,9 @@ app.get('/stylesheets/lib/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, '/stylesheets/lib/bootstrap.min.css'));
 });
 
+app.get('/stylesheets/main.css', function (req, res) {
+  res.sendFile(path.join(__dirname, '/stylesheets/main.css'));
+});
 
 app.use(function(req, res) {
   res.sendFile(__dirname + '/index.html')
