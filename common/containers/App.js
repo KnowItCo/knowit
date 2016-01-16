@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-// import { connect } from 'react-redux';
-import data from '../data/learnables';
+import { connect } from 'react-redux';
+// import data from '../data/learnables';
 import LearnableList from '../components/LearnableList';
 import AppBarTop from '../components/AppBar';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
+import { loadUserPage } from '../actions/actions';
 import ThemeManager from 'material-ui/lib/styles/theme-manager';
 import LightRawTheme from 'material-ui/lib/styles/raw-themes/light-raw-theme';
 import Colors from 'material-ui/lib/styles/colors';
@@ -15,7 +16,6 @@ export default class App extends Component {
     this.state = {
       muiTheme: ThemeManager.getMuiTheme(LightRawTheme),
       open: false,
-      learnables: data,
       tags: ['General', 'tag1', 'tag2', 'tag3', 'tag4'],
     };
   }
@@ -28,10 +28,10 @@ export default class App extends Component {
 
   componentWillMount() {
     const newMuiTheme = ThemeManager.modifyRawThemePalette(this.state.muiTheme, { accent1Color: Colors.cyan100 });
-    const learnables = this.state.learnables || [];
+    // const learnables = this.state.learnables || [];
     const tags = this.state.tags || [];
-
-    this.setState({ muiTheme: newMuiTheme, learnables, tags });
+    this.props.dispatch(loadUserPage('hello'));
+    this.setState({ muiTheme: newMuiTheme, tags });
   }
 
   // componentWillMount() {
@@ -52,7 +52,7 @@ export default class App extends Component {
           <Input
             tags={this.state.tags}
           />
-          <LearnableList learnables={this.state.learnables} />
+        <LearnableList learnables={this.props.learnables} />
         </div>
       </div>
     );
@@ -63,8 +63,20 @@ App.propTypes = {
   updateRouterState: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
+  learnables: PropTypes.array,
+  dispatch: PropTypes.func.isRequired,
 };
 
 App.childContextTypes = {
   muiTheme: React.PropTypes.object,
 };
+
+function mapStateToProps(state) {
+  const list = state.entities.learnables[0] === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables;
+  return {
+    learnables: list,
+    tags: state.tags,
+  };
+}
+
+export default connect(mapStateToProps)(App);

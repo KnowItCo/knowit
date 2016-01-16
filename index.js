@@ -9,15 +9,16 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import routes from './routes';
 import history from './common/services/history';
 import Root from './common/containers/Root';
-// import configureStore from './store/configureStore'
+import configureStore from './common/store/configureStore';
 
 injectTapEventPlugin();
 
-// const store = configureStore()
+const store = configureStore();
 
 requestAnimationFrame(() =>
   render(
     <Root
+      store={store}
       history={history}
       routes={routes}
     />,
