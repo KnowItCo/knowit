@@ -5,6 +5,8 @@
     "node": true
   },
   "ecmaFeatures": {
-    "generators": true
+    "generators": true,
+    "restParams": true,
+    "spread": true
   }
 }

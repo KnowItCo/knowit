@@ -1,3 +1,5 @@
+import merge from 'lodash/merge';
+
 // Define the 3 types of requests
 const REQUEST = 'REQUEST';
 const SUCCESS = 'SUCCESS';
@@ -21,7 +23,7 @@ export const NAVIGATE = 'NAVIGATE';
 // Return action with payload. Payload defaults to empty object if
 // none passed in
 function action(type, payload = {}) {
-  return { type, payload }; // TODO: add spread, check eslint
+  return merge({}, { type }, payload); // TODO: add spread, check eslint
 }
 
 

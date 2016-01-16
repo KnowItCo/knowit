@@ -3,10 +3,10 @@ import merge from 'lodash/merge';
 import { combineReducers } from 'redux';
 
 // Updates an entity cache in response to any action with response.entities
-// TODO: used with normalizr
+// TODO: use with normalizr
 function entities(state = { learnables: {} }, action) {
-  if (action.payload) {
-    return merge({}, state, { learnables: action.payload.response });
+  if (action.response) {
+    return merge({}, state, { learnables: action.response });
   }
 
   return state;
