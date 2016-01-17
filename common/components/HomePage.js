@@ -20,5 +20,5 @@ export default class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
 };
