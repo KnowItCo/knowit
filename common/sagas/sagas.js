@@ -2,7 +2,7 @@ import { take, put, call, fork } from 'redux-saga';
 import { api } from '../services';
 import * as actions from './../actions/actions';
 
-// action creators
+// action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
 const { learnable } = actions;
 
 /* Subroutines */
@@ -46,3 +46,5 @@ export default function* root(getState) {
 
   yield fork(watchLoadUserPage, getLearnables);
 }
+
+// https://github.com/yelouafi/redux-saga/issues/14
