@@ -2,59 +2,21 @@ var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
 var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
-var secrets = require('server/secrets');
+var secrets = require('./server/secrets');
 var path = require('path');
 var express = require('express');
+var session = require('express-session');
+var passport = require('./server/config/passport');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
-var session = require('express-session');
 var redis   = require("redis");
 var RedisStore = require('connect-redis')(session);
 var client  = redis.createClient();
 
-// Passport session setup.
-// To support persistent login sessions, Passport needs to be
-// able to serialize users into and deserialize users out of
-// the session. Typically, this will be as simple as storing
-// the user ID when serializing, and finding the user by ID
-//  when deserializing.
-// TODO: pull from redis database
-passport.serializeUser(function(user, done) {
-  console.log('serializing user: ' + user);
-  done(null, user);
-});
-
-// TODO: pull from redis database
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-});
-
-
-// Use the FacebookStrategy within Passport.
-// Strategies in Passport require a `verify` function,
-// which accept credentials (in this case, an accessToken,
-// refreshToken, and Facebook profile), and invoke a callback
-// with a user object.
-passport.use(new FacebookStrategy({
-    clientID: secrets.FACEBOOK_APP_ID,
-    clientSecret: secrets.FACEBOOK_APP_SECRET,
-    callbackURL: "http://localhost:8888/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-
-      // TODO: associate the Facebook account with a user
-      // record in database, and return that user instead.
-      return done(null, profile);
-    });
-  }
-));
-
 // configure Express
 var app = express();
+app.use(cookieParser());
 var port = 8888;
 
 if (process.env.NODE_ENV === 'production') {
@@ -79,6 +41,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
+
 // Config express sessions
 app.use(session({
   store: new RedisStore(redisOptions),
@@ -96,49 +59,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/login', function(req, res){
-  // send login page
-});
-
-// GET /auth/facebook
-// Use passport.authenticate() as route middleware to
-// authenticate the request. The first step in Facebook
-// authentication will involve redirecting the user to
-// facebook.com.  After authorization, Facebook will redirect
-// the user back to this application at /auth/facebook/callback
-app.get('/auth/facebook',
-  passport.authenticate('facebook'),
-  function(req, res){
-    // The request will be redirected to Facebook for authentication, so this
-    // function will not be called.
-  });
-
-// GET /auth/facebook/callback
-// Use passport.authenticate() as route middleware to
-// authenticate the request. If authentication fails,
-// the user will be redirected back to the login page.
-// Otherwise, the primary route function function will be called,
-// which, in this example, will redirect the user to the profile page.
-app.get('/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/profile');
-  });
-
-app.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
-});
-
 // Set up routes
 var authRoute = express.Router();
 var apiRoute = express.Router();
 
 app.use('/auth', authRoute);
-require('../routes/auth')(authRoute);
+require('./server/routes/auth')(authRoute);
 
 app.use('/api', apiRoute);
-require('../routes/api')(apiRoute);
+require('./server/routes/api')(apiRoute);
 
 app.listen(port, function(error) {
   if (error) {
