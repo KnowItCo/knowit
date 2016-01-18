@@ -77,19 +77,6 @@ app.listen(port, function(error) {
   }
 });
 
-
-// Simple route middleware to ensure user is authenticated.
-//   Use this route middleware on any resource that needs to be protected.  If
-//   the request is authenticated (typically via a persistent login session),
-//   the request will proceed.  Otherwise, the user will be redirected to the
-//   login page.
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login')
-}
-
 // app.get('/stylesheets/lib/bootstrap.min.css', function (req, res) {
 //   res.setHeader('text/css');
 //   console.log('got here');
