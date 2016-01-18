@@ -21,18 +21,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(function(req, res) {
-  res.sendFile(__dirname + '/index.html')
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/stylesheets/lib/bootstrap.min.css', function (req, res) {
-  res.setHeader('text/css');
-  res.sendFile(path.join(__dirname, '/stylesheets/lib/bootstrap.min.css'));
-});
-
-app.get('/stylesheets/main.css', function (req, res) {
-  res.setHeader('text/css');
-  res.sendFile(path.join(__dirname, '/stylesheets/main.css'));
-});
+// app.get('/stylesheets/lib/bootstrap.min.css', function (req, res) {
+//   res.setHeader('text/css');
+//   console.log('got here');
+//   res.sendFile(path.join(__dirname, 'stylesheets/lib/bootstrap.min.css'));
+// });
+//
+// app.get('/stylesheets/main.css', function (req, res) {
+//   res.setHeader('text/css');
+//   console.log('got here');
+//   res.sendFile(path.join(__dirname, 'stylesheets/main.css'));
+// });
 
 app.listen(port, function(error) {
   if (error) {
