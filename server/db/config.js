@@ -10,10 +10,17 @@ var cn = {
     port: 5432, // 5432 is the default;
     database: 'knowit',
     user: 'peekay',
-    password: 'helloWorld'
+    password: ''
 };
 
 var db = pgp(cn);
+
+module.exports = {
+  db: db,
+  pgp: pgp
+};
+
+
 
 // db.query("select * from users where active=$1", true)
 //     .then(function (data) {

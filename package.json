@@ -42,6 +42,7 @@
     "normalizr": "^1.0.0",
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
+    "pg": "^4.4.3",
     "pg-promise": "^2.9.0",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.6",
