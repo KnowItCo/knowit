@@ -1,8 +1,8 @@
 var passport = require('./../config/passport');
 
 module.exports = function(app) {
-  app.get('/login', function(req, res){
-    // send login page
+  app.post('/login', function(req, res){
+    res.send('Hello');
   });
 
   // GET /auth/facebook

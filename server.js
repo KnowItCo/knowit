@@ -38,9 +38,6 @@ app.use(webpackHotMiddleware(compiler));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(function(req, res) {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
 
 // Config express sessions
 app.use(session({
@@ -68,6 +65,11 @@ require('./server/routes/auth')(authRoute);
 
 app.use('/api', apiRoute);
 require('./server/routes/api')(apiRoute);
+
+// default catch all
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 app.listen(port, function(error) {
   if (error) {
