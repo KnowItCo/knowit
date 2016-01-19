@@ -3,7 +3,7 @@ import { api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { learnable } = actions;
+const { learnable, loginUser } = actions;
 
 /* Subroutines */
 
@@ -24,19 +24,22 @@ function* fetchEntity(entity, apiFn, id) {
 }
 
 const fetchLearnables = fetchEntity.bind(null, learnable, api.fetchLearnables);
+const loginUserAsync = fetchEntity.bind(null, loginUser, api.loginUser);
 
-// TODO: the API needs to updated to use username, obviously
 function* loadLearnables(username) {
   yield call(fetchLearnables, username);
 }
 
-/* WATCHERS */
+function* loadLoginUser() {
+  yield call(loginUserAsync);
+}
 
-// Fetches data for a User : user learnables
+// Fetches data for a User: user learnables
 function* watchLoadUserPage() {
   while (true) {
     const { username } = yield take(actions.LOAD_USER_PAGE);
 
+    yield call(loadLoginUser);
     yield call(loadLearnables, username);
   }
 }

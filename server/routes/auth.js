@@ -25,7 +25,7 @@ module.exports = function(app) {
   // Otherwise, the primary route function function will be called,
   // which, will redirect the user to the profile page.
   app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    passport.authenticate('facebook', { failureRedirect: '/' }),
     function(req, res) {
       res.redirect('/profile');
     });

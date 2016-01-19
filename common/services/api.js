@@ -1,5 +1,6 @@
 import 'isomorphic-fetch';
 import Firebase from 'firebase';
+import axios from 'axios';
 
 function getFirebaseData(url) {
   // assuming they have firebase source included in html file
@@ -34,5 +35,12 @@ function callApi(username) {
           );
 }
 
+function loginUserAsync() {
+  axios.get('/auth/facebook')
+  .then(response => ({ response }))
+  .catch(error => ({ error: error.message || 'Something shitty happened' }));
+}
+
 // api services
 export const fetchLearnables = username => callApi(username);
+export const loginUser = () => loginUserAsync();

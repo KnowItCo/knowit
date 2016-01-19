@@ -1,12 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router';
 import App from './common/containers/App';
-import HomePage from './common/components/HomePage';
-import Login from './common/components/Login';
+import Profile from './common/containers/Profile';
 
 export default (
-  <Route path="/" component={HomePage}>
-    <Route path="login" component={Login} />
-    <Route path="profile" component={App} />
+  <Route path="/" component={App}>
+    <Route path="profile" component={Profile} />
   </Route>
 );

@@ -13,7 +13,7 @@ function createRequestType(base) {
   return res;
 }
 
-export const USER = createRequestType('USER');
+export const LOGIN = createRequestType('LOGIN');
 export const LEARNABLE = createRequestType('LEARNABLE');
 
 export const LOAD_USER_PAGE = 'LOAD_USER_PAGE';
@@ -23,14 +23,14 @@ export const NAVIGATE = 'NAVIGATE';
 // Return action with payload. Payload defaults to empty object if
 // none passed in
 function action(type, payload = {}) {
-  return merge({}, { type }, payload); // TODO: add spread, check eslint
+  return merge({}, { type }, payload);
 }
 
 
-export const user = {
-  request: login => action(USER.REQUEST, { login }),
-  success: (login, response) => action(USER.SUCCESS, { login, response }),
-  failure: (login, error) => action(USER.FAILURE, { login, error }),
+export const loginUser = {
+  request: () => action(LOGIN.REQUEST, {}),
+  success: (response) => action(LOGIN.SUCCESS, { response }),
+  failure: (error) => action(LOGIN.FAILURE, { error }),
 };
 
 export const learnable = {
@@ -41,4 +41,4 @@ export const learnable = {
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });
 export const navigate = pathname => action(NAVIGATE, { pathname });
-export const loadUserPage = (username) => action(LOAD_USER_PAGE, { username });
+export const loadUserPage = username => action(LOAD_USER_PAGE, { username });

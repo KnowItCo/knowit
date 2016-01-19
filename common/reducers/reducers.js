@@ -4,6 +4,31 @@ import { combineReducers } from 'redux';
 
 // Updates an entity cache in response to any action with response.entities
 // TODO: use with normalizr
+
+function login(state = { isLoggingIn: false, isLoggedIn: false, error: null }, action) {
+  switch (action.type) {
+    case ActionTypes.LOGIN_REQUEST:
+      return merge({}, state, {
+        isLoggingIn: true,
+        isLoggedIn: false,
+      });
+    case ActionTypes.LOGIN_FAILURE:
+      return merge({}, state, {
+        error: action.error,
+        isLoggingIn: false,
+        isLoggedIn: false,
+      });
+    case ActionTypes.LOGIN_SUCCESS:
+      return merge({}, state, {
+        error: null,
+        isLoggingIn: false,
+        isLoggedIn: true,
+      });
+    default:
+      return state;
+  }
+}
+
 function entities(state = { learnables: {} }, action) {
   if (action.response) {
     return merge({}, state, { learnables: action.response });
@@ -22,6 +47,7 @@ function router(state = { pathname: '/' }, action) {
 }
 
 const rootReducer = combineReducers({
+  login,
   entities,
   router,
 });
