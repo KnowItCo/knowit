@@ -66,6 +66,8 @@ require('./server/routes/auth')(authRoute);
 app.use('/api', apiRoute);
 require('./server/routes/api')(apiRoute);
 
+app.use(express.static(path.join(__dirname, 'static')));
+
 // default catch all
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
@@ -85,8 +87,3 @@ app.listen(port, function(error) {
 //   res.sendFile(path.join(__dirname, 'stylesheets/lib/bootstrap.min.css'));
 // });
 //
-// app.get('/stylesheets/main.css', function (req, res) {
-//   res.setHeader('text/css');
-//   console.log('got here');
-//   res.sendFile(path.join(__dirname, 'stylesheets/main.css'));
-// });

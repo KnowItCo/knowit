@@ -12,7 +12,7 @@ module.exports = function(app) {
   // facebook.com.  After authorization, Facebook will redirect
   // the user back to this application at /auth/facebook/callback
   app.get('/auth/facebook',
-    passport.authenticate('facebook'),
+    passport.authenticate('facebook', { scope: 'email' }),
     function(req, res){
       // The request will be redirected to Facebook for authentication, so this
       // function will not be called.
@@ -23,7 +23,7 @@ module.exports = function(app) {
   // authenticate the request. If authentication fails,
   // the user will be redirected back to the login page.
   // Otherwise, the primary route function function will be called,
-  // which, in this example, will redirect the user to the profile page.
+  // which, will redirect the user to the profile page.
   app.get('/auth/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
     function(req, res) {

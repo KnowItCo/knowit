@@ -7,7 +7,7 @@ var sqlAddUser = sql('./../db/insertStudent.sql');
 
 module.exports = function (app) {
   app.post('/student', function (req, res) {
-    db.query('INSERT INTO knowit_schema.student(id, username, firstname, lastname, email) VALUES (${id}, ${username}, ${firstname}, ${lastname}, ${email})', {id: 2, username: 'peay', firstname: 'Preethi', lastname: 'Kasireddy', email: 'iam.prehi.k@gmail.com'})
+    db.query('INSERT INTO knowit_schema.student(username, firstname, lastname, email) VALUES (${username}, ${firstname}, ${lastname}, ${email})', {username: 'esday', firstname: 'Ptadfhi', lastname: 'Kaasddy', email: 'm.ehi.k@gmail.com'})
       .then(user=> {
           console.log("USER:", user);
           res.send('success!');

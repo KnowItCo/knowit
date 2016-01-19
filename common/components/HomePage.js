@@ -7,12 +7,31 @@ export default class HomePage extends Component {
   }
 
   render() {
+    const divStyle = {
+      padding: 70,
+      textAlign: 'center',
+    };
+
     return (
       <div>
-        <ul>
-          <li><Link to="/login">Login</Link></li>
-          <li><Link to="/profile">App</Link></li>
-        </ul>
+        <nav className="navbar navbar-default navbar-fixed-top">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <a className="navbar-brand" href="#">
+                KNOW IT
+              </a>
+            </div>
+          </div>
+        </nav>
+        <div style={divStyle}>
+          <h1>
+            Know everything
+          </h1>
+          <ul>
+            <div><Link to="/login">Login with Facebook</Link></div>
+            <div><Link to="/profile">App</Link></div>
+          </ul>
+        </div>
         {this.props.children}
       </div>
     );
