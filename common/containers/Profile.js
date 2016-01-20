@@ -54,7 +54,7 @@ Profile.propTypes = {
 function mapStateToProps(state) {
   return {
     tags: state.tags,
-    learnables: state.entities.learnables,
+    learnables: state.entities.learnables[0] === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
   };
 }
 

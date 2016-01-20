@@ -7,22 +7,22 @@ import { combineReducers } from 'redux';
 
 function login(state = { isLoggingIn: false, isLoggedIn: false, error: null }, action) {
   switch (action.type) {
-    case ActionTypes.LOGIN_REQUEST:
+    case ActionTypes.LOGIN.REQUEST:
       return merge({}, state, {
         isLoggingIn: true,
         isLoggedIn: false,
       });
-    case ActionTypes.LOGIN_FAILURE:
-      return merge({}, state, {
-        error: action.error,
-        isLoggingIn: false,
-        isLoggedIn: false,
-      });
-    case ActionTypes.LOGIN_SUCCESS:
+    case ActionTypes.LOGIN.SUCCESS:
       return merge({}, state, {
         error: null,
         isLoggingIn: false,
         isLoggedIn: true,
+      });
+    case ActionTypes.LOGIN.FAILURE:
+      return merge({}, state, {
+        error: action.error,
+        isLoggingIn: false,
+        isLoggedIn: false,
       });
     default:
       return state;

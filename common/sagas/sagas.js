@@ -1,9 +1,12 @@
+/*eslint-disable */
+
 import { take, put, call, fork } from 'redux-saga';
-import { api } from '../services';
+import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
 const { learnable, loginUser } = actions;
+// const { learnable } = actions;
 
 /* Subroutines */
 
@@ -14,7 +17,6 @@ const { learnable, loginUser } = actions;
 
 // calling action creators
 function* fetchEntity(entity, apiFn, id) {
-  yield put(entity.request(id));
   const { response, error } = yield call(apiFn, id);
   if (!error) {
     yield put(entity.success(id, response));
@@ -30,23 +32,34 @@ function* loadLearnables(username) {
   yield call(fetchLearnables, username);
 }
 
-function* loadLoginUser() {
-  yield call(loginUserAsync);
+function* loadLoginUser(username) {
+  yield call(loginUserAsync, username);
 }
 
 // Fetches data for a User: user learnables
 function* watchLoadUserPage() {
   while (true) {
-    const { username } = yield take(actions.LOAD_USER_PAGE);
+    const { username } = yield take(actions.LOGIN.REQUEST);
 
-    yield call(loadLoginUser);
+    yield call(loadLoginUser, username);
     yield call(loadLearnables, username);
+    yield put(actions.NAVIGATE, '/profile');
+    yield history.push('/profile');
+  }
+}
+
+// trigger router navigation via history
+function* watchNavigate() {
+  while (true) {
+    const { pathname } = yield take(actions.NAVIGATE);
+    yield history.push(pathname);
   }
 }
 
 export default function* root(getState) {
   const getLearnables = getState().entities.learnables;
 
+  yield fork(watchNavigate);
   yield fork(watchLoadUserPage, getLearnables);
 }
 

@@ -28,9 +28,9 @@ function action(type, payload = {}) {
 
 
 export const loginUser = {
-  request: () => action(LOGIN.REQUEST, {}),
-  success: (response) => action(LOGIN.SUCCESS, { response }),
-  failure: (error) => action(LOGIN.FAILURE, { error }),
+  request: (username) => action(LOGIN.REQUEST, { username }),
+  success: (username, response) => action(LOGIN.SUCCESS, { username, response }),
+  failure: (username, error) => action(LOGIN.FAILURE, { username, error }),
 };
 
 export const learnable = {
@@ -42,3 +42,7 @@ export const learnable = {
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });
 export const navigate = pathname => action(NAVIGATE, { pathname });
 export const loadUserPage = username => action(LOAD_USER_PAGE, { username });
+
+// export const loginUserRequest = username => action(LOGIN.REQUEST, { username });
+// export const loginUserSuccess = (username, response) => action(LOGIN.SUCCESS, { username, response });
+// export const loginUserFailure = (username, error) => action(LOGIN.FAILURE, { username, error });
