@@ -22,7 +22,7 @@ function callApi(username) {
   // this needs to be updated, obviously. Right now just
   // faking it to get sagas to work
   console.log(username);
-  return getFirebaseData('https://knowit.firebaseio.com/')
+  return getFirebaseData('https://knowittwo.firebaseio.com/')
           .then(response => {
             if (response.status > 400) {
               throw new Error('sorry');

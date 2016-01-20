@@ -69,7 +69,7 @@ require('./server/routes/api')(apiRoute);
 app.use(express.static(path.join(__dirname, 'static')));
 
 // default catch all
-app.get('*', function(req, res) {
+app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
 });
 
