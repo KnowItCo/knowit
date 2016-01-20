@@ -21,11 +21,14 @@ export default class LeftNavBar extends Component {
 
   render() {
     const style = {
-      top: 64,
-      zIndex: 9999,
+      top: 0,
+      zIndex: -1,
+      paddingTop: '80',
       width: 200,
       height: '100%',
       backgroundColor: 'grey',
+      position: 'fixed',
+      docked: true,
     };
 
     return (

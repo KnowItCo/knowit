@@ -40,11 +40,19 @@ function* loadLoginUser(username) {
 function* watchLoadUserPage() {
   while (true) {
     const { username } = yield take(actions.LOGIN.REQUEST);
-
     yield call(loadLoginUser, username);
     yield call(loadLearnables, username);
-    yield put(actions.NAVIGATE, '/profile');
+    yield put(actions.navigate('/profile'));
     yield history.push('/profile');
+  }
+}
+
+// Fetches data for a User: user learnables
+function* watchFailureLogin() {
+  while (true) {
+    const { username, error } = yield take(actions.LOGIN.FAILURE);
+    yield put(actions.navigate('/profile'));
+    yield history.push('/');
   }
 }
 
@@ -58,8 +66,9 @@ function* watchNavigate() {
 
 export default function* root(getState) {
   const getLearnables = getState().entities.learnables;
-
+  
   yield fork(watchNavigate);
+  yield fork(watchFailureLogin);
   yield fork(watchLoadUserPage, getLearnables);
 }
 

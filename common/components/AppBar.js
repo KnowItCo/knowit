@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 
 const style = {
   backgroundColor: '#2B3031',
+  position: 'fixed',
 };
 
 const AppBarTop = () => (

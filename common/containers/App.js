@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AppBarTop from '../components/AppBar';
-import { loginUser, updateRouterState } from '../actions/actions';
+import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
 // import Profile from './Profile';
 
@@ -12,28 +12,28 @@ export default class App extends Component {
     this.onLoginClick = this.onLoginClick.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.location.pathname !== nextProps.location.pathname) {
-      this.props.updateRouterState({
-        pathname: nextProps.location.pathname,
-        params: nextProps.params,
-      });
-    }
+  onLoginClick() {
+    const { dispatch } = this.props;
+    const action = ActionCreators.loginUser.request(this.getInputValue());
+    dispatch(action);
   }
 
-  onLoginClick() {
-    console.log(this.props.dispatch);
-    this.props.dispatch(loginUser.request('hello'));
+  getInputValue() {
+    return this.refs.input.value;
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="main-container">
         <AppBarTop logo={'Know It'}/>
         {!this.props.isLoggedIn &&
-          <LandingPage
-            onLoginClick={this.onLoginClick}
-          />}
+          <div>
+            <input ref="input" placeholder="Enter your username"></input>
+            <LandingPage
+              onLoginClick={this.onLoginClick}
+            />
+          </div>}
           {this.props.isLoggedIn && this.props.children}
       </div>
     );
@@ -48,6 +48,7 @@ App.propTypes = {
   loginUser: PropTypes.func.isRequired,
   location: PropTypes.object,
   updateRouterState: PropTypes.func,
+  getInputValue: PropTypes.func,
 };
 
 function mapStateToProps(state) {
@@ -56,4 +57,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { updateRouterState })(App);
+export default connect(mapStateToProps)(App);
