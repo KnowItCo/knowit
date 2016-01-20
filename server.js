@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(session({
   store: new RedisStore(redisOptions),
   secret: SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   cookie: { httpOnly: true, maxAge: 2419200000 }
 }));
@@ -67,6 +67,10 @@ app.use('/api', apiRoute);
 require('./server/routes/api')(apiRoute);
 
 app.use(express.static(path.join(__dirname, 'static')));
+
+app.get('/entry', function(req, res) {
+  res.sendFile(path.join(__dirname + '/index.html'));
+});
 
 // default catch all
 app.get('/', function(req, res) {

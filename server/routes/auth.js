@@ -1,4 +1,5 @@
 var passport = require('./../config/passport');
+var authMiddleware = require('./../config/authMiddleware');
 
 module.exports = function(app) {
   app.post('/login', function(req, res){
@@ -25,11 +26,17 @@ module.exports = function(app) {
   // Otherwise, the primary route function function will be called,
   // which, will redirect the user to the profile page.
   app.get('/facebook/callback',
-    passport.authenticate('facebook', { successRedirect: '/profile',
-                                        failureRedirect: '/' }));
+    passport.authenticate('facebook', { failureRedirect: '/' }), function (req, res) {
+      res.cookie('id', req.user.id);
+      res.redirect('/');
+    });
 
   app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
+  });
+
+  app.get('/checkAuth', function(req, res) {
+    res.send('success');
   });
 };

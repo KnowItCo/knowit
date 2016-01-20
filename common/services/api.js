@@ -35,13 +35,13 @@ function callApi(username) {
           );
 }
 
-function loginUserAsync(username) {
-  console.log(username);
-  return fetch('/auth/facebook')
+function loginUserAsync() {
+  return fetch('/auth/checkAuth')
           .then(function (response) {
             if (response.status >= 400) {
               throw new Error('Bad response from server');
             }
+            console.log('response');
             return response;
           })
           .then(

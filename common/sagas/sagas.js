@@ -32,15 +32,15 @@ function* loadLearnables(username) {
   yield call(fetchLearnables, username);
 }
 
-function* loadLoginUser(username) {
-  yield call(loginUserAsync, username);
+function* loadLoginUser() {
+  yield call(loginUserAsync);
 }
 
 // Fetches data for a User: user learnables
 function* watchLoadUserPage() {
   while (true) {
     const { username } = yield take(actions.LOGIN.REQUEST);
-    // yield call(loadLoginUser, username);
+    yield call(loadLoginUser);
     yield call(loadLearnables, username);
     yield put(actions.navigate('/profile'));
     yield history.push('/profile');
@@ -51,7 +51,7 @@ function* watchLoadUserPage() {
 function* watchFailureLogin() {
   while (true) {
     const { username, error } = yield take(actions.LOGIN.FAILURE);
-    yield put(actions.navigate('/profile'));
+    yield put(actions.navigate('/'));
     yield history.push('/');
   }
 }

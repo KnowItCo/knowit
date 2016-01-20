@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -19,8 +18,7 @@ export default class LandingPage extends Component {
             Know everything
           </h1>
           <ul>
-            <a href="/auth/facebook" className="btn btn-info" role="button" onClick={this.props.onLoginClick}>Login with Facebook</a>
-            <div><Link to="/profile">App</Link></div>
+            <a href="/auth/facebook" className="btn btn-info" role="button" onClick={this.props.onFacebookLoginClick}>Login with Facebook</a>
           </ul>
         </div>
       </div>
@@ -30,4 +28,5 @@ export default class LandingPage extends Component {
 
 LandingPage.propTypes = {
   onLoginClick: PropTypes.func,
+  onFacebookLoginClick: PropTypes.func,
 };

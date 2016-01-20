@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
+import Entry from '../components/Entry';
 // import Profile from './Profile';
 
 export default class App extends Component {
@@ -31,6 +32,9 @@ export default class App extends Component {
           <div>
             <input ref="input" placeholder="Enter your username"></input>
             <LandingPage
+              onFacebookLoginClick={this.onFacebookLoginClick}
+            />
+            <Entry
               onLoginClick={this.onLoginClick}
             />
           </div>}
@@ -49,11 +53,13 @@ App.propTypes = {
   location: PropTypes.object,
   updateRouterState: PropTypes.func,
   getInputValue: PropTypes.func,
+  facebookLoginRequested: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.login.isLoggedIn,
+    facebookLoginRequested: state.facebookLoginRequested,
   };
 }
 

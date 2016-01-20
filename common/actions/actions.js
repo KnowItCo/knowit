@@ -28,7 +28,7 @@ function action(type, payload = {}) {
 
 
 export const loginUser = {
-  request: (username) => action(LOGIN.REQUEST, { username }),
+  request: () => action(LOGIN.REQUEST, { }),
   success: (username, response) => action(LOGIN.SUCCESS, { username, response }),
   failure: (username, error) => action(LOGIN.FAILURE, { username, error }),
 };
