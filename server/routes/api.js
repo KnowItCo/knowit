@@ -13,8 +13,8 @@ module.exports = function (app) {
         });
   });
 
-  app.get('/student', function (req, res) {
-    const email = req.param.email;
+  app.get('/student/:email', function (req, res) {
+    const email = req.params.email;
     db.query('SELECT * from knowit_schema.student WHERE email=${email}', { email })
       .then(student => {
         res.json(student);

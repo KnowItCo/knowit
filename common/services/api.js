@@ -36,12 +36,12 @@ function callApi(username) {
 }
 
 function loginUserAsync(email) {
-  return axios('/api/student?EMAIL=' + email)
+  return axios('/api/student/' + email)
           .then(function (response) {
             if (response.status >= 400) {
               throw new Error('Bad response from server');
             }
-            console.log(response);
+            console.log(response, 'response');
             return response;
           })
           .then(

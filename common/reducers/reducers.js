@@ -5,24 +5,27 @@ import { combineReducers } from 'redux';
 // Updates an entity cache in response to any action with response.entities
 // TODO: use with normalizr
 
-function login(state = { isLoggingIn: false, isLoggedIn: false, error: null }, action) {
+function login(state = { email: null, isLoggingIn: false, isLoggedIn: false, error: null }, action) {
   switch (action.type) {
     case ActionTypes.LOGIN.REQUEST:
       return merge({}, state, {
         isLoggingIn: true,
         isLoggedIn: false,
+        email: action.email,
       });
     case ActionTypes.LOGIN.SUCCESS:
       return merge({}, state, {
         error: null,
         isLoggingIn: false,
         isLoggedIn: true,
+        email: action.email,
       });
     case ActionTypes.LOGIN.FAILURE:
       return merge({}, state, {
         error: action.error,
         isLoggingIn: false,
         isLoggedIn: false,
+        email: null,
       });
     default:
       return state;

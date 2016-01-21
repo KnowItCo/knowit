@@ -42,8 +42,8 @@ function* watchLoadUserPage() {
     const { email } = yield take(actions.LOGIN.REQUEST);
     yield call(loadLoginUser, email);
     yield call(loadLearnables, email);
-    yield put(actions.navigate('/profile/:email'));
-    yield history.push('/profile/:email');
+    yield put(actions.navigate(`/profile/${email}`));
+    yield history.push(`/profile/${email}`);
   }
 }
 
