@@ -1,11 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/lib/text-field';
 
-const textFieldStyle = {
-  width: 200,
-  position: 'relative',
-  paddingBottom: 10,
-};
+// <input
+//   ref="input"
+//   defaultValue="iam.preethi.k@gmail.com"
+//   style={textFieldStyle}
+// />
+// const textFieldStyle = {
+//   width: 200,
+//   position: 'relative',
+//   paddingBottom: 10,
+// };
 
 
 export default class Entry extends Component {
@@ -15,12 +21,8 @@ export default class Entry extends Component {
     this.handleLoginClick = this.handleLoginClick.bind(this);
   }
 
-  getInputValue() {
-    return this.refs.input.value;
-  }
-
   handleLoginClick() {
-    this.props.onLoginClick(this.getInputValue());
+    this.props.onLoginClick(this._email.getValue());
   }
 
   render() {
@@ -30,10 +32,9 @@ export default class Entry extends Component {
 
     return (
       <div style={divStyle}>
-        <input
-          ref="input"
-          defaultValue="iam.preethi.k@gmail.com"
-          style={textFieldStyle}
+        <TextField
+          floatingLabelText="Email"
+          ref={(c) => this._email = c}
         />
       <RaisedButton
         onClick={this.handleLoginClick}

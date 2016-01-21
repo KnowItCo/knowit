@@ -1,16 +1,17 @@
 import React, { Component, PropTypes } from 'react';
-// import TextField from 'material-ui/lib/text-field';
+import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/lib/text-field';
 // import Button from '../components/Button';
 // import TagInput from '../components/AutoComplete';
 
 const textFieldStyle = {
   width: 550,
-  right: 0,
   position: 'relative',
 };
 
-const buttonStyle = {
-  paddingRight: 50,
+const tagFieldStyle = {
+  width: 180,
+  position: 'relative',
 };
 
 export default class Input extends Component {
@@ -21,8 +22,8 @@ export default class Input extends Component {
   }
 
   handleAddNewLearnable() {
-    const tags = this.refs.tags.value;
-    const learnable = this.refs.learnable.value;
+    const tags = this._tag.getValue();
+    const learnable = this._learnable.getValue();
     this.props.addNewLearnable(learnable, tags);
   }
 
@@ -31,22 +32,26 @@ export default class Input extends Component {
     return (
       <div>
         <div>
-          <input
-            ref="learnable"
+          <TextField
+            floatingLabelText="Learnable"
+            ref={(c) => this._learnable = c}
             style={textFieldStyle}
+            multiLine
           />
         </div>
         <div>
-          <input
-            ref="tags"
+          <TextField
+            floatingLabelText="Tags"
+            ref={(c) => this._tag = c}
+            style={tagFieldStyle}
+            multiLine
           />
         </div>
         <div>
-          <button
-            style={buttonStyle}
+          <RaisedButton
             onClick={this.handleAddNewLearnable}
-          >
-          </button>
+            label="Add Learnable"
+          />
         </div>
       </div>
     );

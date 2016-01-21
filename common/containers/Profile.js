@@ -39,7 +39,7 @@ export default class Profile extends Component {
         <div className="col-md-4 col-xs-6">
           <LeftNavBar />
         </div>
-        <div className="col-md-8 col-xs-12">
+        <div className="col-md-8 col-xs-12" style={{ paddingTop: 70 }}>
           <Input
             tags={this.state.tags}
             addNewLearnable={this.addNewLearnable}

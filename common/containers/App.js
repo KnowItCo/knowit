@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import AppBarTop from '../components/AppBar';
+import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
 import Entry from '../components/Entry';
 // import Profile from './Profile';
-// <AppBarTop logo={'Know It'}/>
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -20,9 +20,11 @@ export default class App extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <div className="main-container">
+        <AppBarTop
+          logo={'Know It'}
+        />
         {!this.props.isLoggedIn &&
           <div>
             <LandingPage />
