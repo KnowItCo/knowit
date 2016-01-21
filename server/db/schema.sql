@@ -16,6 +16,7 @@ CREATE TABLE knowit_schema.learnable
   id serial PRIMARY KEY,
   text text NOT NULL,
   createdAt date NOT NULL,
+  tags text ARRAY DEFAULT ARRAY['General'],
   userid integer NOT NULL REFERENCES knowit_schema.student (id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );

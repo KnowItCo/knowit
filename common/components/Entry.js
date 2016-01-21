@@ -32,7 +32,7 @@ export default class Entry extends Component {
       <div style={divStyle}>
         <input
           ref="input"
-          defaultValue="iam_awesome@gmail.com"
+          defaultValue="iam.preethi.k@gmail.com"
           style={textFieldStyle}
         />
       <RaisedButton

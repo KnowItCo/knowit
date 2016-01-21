@@ -32,6 +32,33 @@ function login(state = { email: null, isLoggingIn: false, isLoggedIn: false, err
   }
 }
 
+function addLearnable(state = { email: null, learnableBeingAdded: false, learnableAdded: false, error: null }, action) {
+  switch (action.type) {
+    case ActionTypes.ADD_LEARNABLE.REQUEST:
+      return merge({}, state, {
+        learnableBeingAdded: true,
+        email: action.email,
+        learnable: action.learnable,
+        tags: action.tags,
+      });
+    case ActionTypes.ADD_LEARNABLE.SUCCESS:
+      return merge({}, state, {
+        learnableBeingAdded: false,
+        learnableAdded: true,
+        learnable: action.learnable,
+        tags: action.tags,
+      });
+    case ActionTypes.ADD_LEARNABLE.FAILURE:
+      return merge({}, state, {
+        learnableBeingAdded: false,
+        learnableAdded: false,
+        error: action.error,
+      });
+    default:
+      return state;
+  }
+}
+
 function entities(state = { learnables: {} }, action) {
   if (action.response) {
     return merge({}, state, { learnables: action.response });
@@ -51,6 +78,7 @@ function router(state = { pathname: '/' }, action) {
 
 const rootReducer = combineReducers({
   login,
+  addLearnable,
   entities,
   router,
 });

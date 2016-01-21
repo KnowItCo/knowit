@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import data from '../data/learnables';
+import * as ActionCreators from '../actions/actions';
 import LearnableList from '../components/LearnableList';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
@@ -11,11 +11,19 @@ export default class Profile extends Component {
     this.state = {
       tags: ['General', 'tag1', 'tag2', 'tag3', 'tag4'],
     };
+
+    this.addNewLearnable = this.addNewLearnable.bind(this);
   }
 
   componentWillMount() {
     const tags = this.state.tags || [];
     this.setState({ tags });
+  }
+
+  addNewLearnable(learnable, tags) {
+    const { dispatch } = this.props;
+    const action = ActionCreators.addLearnable.request(this.props.email, learnable, tags);
+    dispatch(action);
   }
 
   // componentWillMount() {
@@ -34,6 +42,7 @@ export default class Profile extends Component {
         <div className="col-md-8 col-xs-12">
           <Input
             tags={this.state.tags}
+            addNewLearnable={this.addNewLearnable}
           />
         <LearnableList learnables={this.props.learnables} />
         </div>
@@ -48,6 +57,7 @@ Profile.propTypes = {
   params: PropTypes.object,
   learnables: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
+  email: PropTypes.string,
 };
 
 
@@ -55,6 +65,7 @@ function mapStateToProps(state) {
   return {
     tags: state.tags,
     learnables: state.entities.learnables[0] === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
+    email: state.login.email,
   };
 }
 

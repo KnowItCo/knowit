@@ -1,1 +1,1 @@
-SELECT * from knowit_schema.student where username=${username} and email=${email}
+SELECT * from knowit_schema.student where email=${email}

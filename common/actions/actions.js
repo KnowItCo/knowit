@@ -14,8 +14,8 @@ function createRequestType(base) {
 }
 
 export const LOGIN = createRequestType('LOGIN');
-export const LEARNABLE = createRequestType('LEARNABLE');
-
+export const GET_LEARNABLES = createRequestType('GET_LEARNABLES');
+export const ADD_LEARNABLE = createRequestType('ADD_LEARNABLE');
 export const LOAD_USER_PAGE = 'LOAD_USER_PAGE';
 export const UPDATE_ROUTER_STATE = 'UPDATE_ROUTER_STATE';
 export const NAVIGATE = 'NAVIGATE';
@@ -33,10 +33,16 @@ export const loginUser = {
   failure: (email, error) => action(LOGIN.FAILURE, { email, error }),
 };
 
-export const learnable = {
-  request: username => action(LEARNABLE.REQUEST, { username }),
-  success: (username, response) => action(LEARNABLE.SUCCESS, { username, response }),
-  failure: (username, error) => action(LEARNABLE.FAILURE, { username, error }),
+export const getLearnables = {
+  request: email => action(GET_LEARNABLES.REQUEST, { email }),
+  success: (email, response) => action(GET_LEARNABLES.SUCCESS, { email, response }),
+  failure: (email, error) => action(GET_LEARNABLES.FAILURE, { email, error }),
+};
+
+export const addLearnable = {
+  request: (email, learnable, tags) => action(ADD_LEARNABLE.REQUEST, { email, learnable, tags }),
+  success: (email, response) => action(ADD_LEARNABLE.SUCCESS, { email, response }),
+  failure: (email, error) => action(ADD_LEARNABLE.FAILURE, { email, error }),
 };
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });

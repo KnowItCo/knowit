@@ -37,19 +37,39 @@ function callApi(username) {
 
 function loginUserAsync(email) {
   return axios('/api/student/' + email)
-          .then(function (response) {
-            if (response.status >= 400) {
-              throw new Error('Bad response from server');
-            }
-            console.log(response, 'response');
-            return response;
-          })
-          .then(
-            response => ({ response }),
-            error => ({ error: error.message || 'Something shitty happened' })
-          );
+    .then(function (response) {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      console.log(response, 'response');
+      return response;
+    })
+    .then(
+      response => ({ response }),
+      error => ({ error: error.message || 'Something shitty happened' })
+    );
+}
+
+function addLearnableAsync(email, learnable, tags) {
+  console.log(learnable, tags, email);
+  return axios.post('/api/learnable/', {
+    text: learnable,
+    tags,
+    email,
+  })
+    .then(function (response) {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      return response;
+    })
+    .then(
+      response => ({ response }),
+      error => ({ error: error.message || 'Something shitty happened' })
+    );
 }
 
 // api services
 export const fetchLearnables = username => callApi(username);
 export const loginUser = username => loginUserAsync(username);
+export const addLearnable = (learnable, tags, email) => addLearnableAsync(learnable, tags, email);
