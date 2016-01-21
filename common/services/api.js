@@ -24,7 +24,7 @@ function loginUserAsync(email) {
       return response;
     })
     .then(
-      response => ({ response }),
+      confirmation => ({ confirmation }),
       error => ({ error: error.message || 'Something shitty happened' })
     );
 }

@@ -17,6 +17,7 @@ const { getLearnables, loginUser, addLearnable } = actions;
 
 // calling action creators
 function* fetchEntity(entity, apiFn, id) {
+  yield put(entity.request(id));
   const { response, error } = yield call(apiFn, id);
   if (!error) {
     yield put(entity.success(id, response));
@@ -34,8 +35,17 @@ function* addLearnableSaga(entity, apiCall, email, learnable, tags) {
   }
 }
 
+function* loginUserSaga(entity, apiCall, email) {
+  const { confirmation, error } = yield call(apiCall, email);
+  if (!error) {
+    yield put(entity.success(email, confirmation));
+  } else {
+    yield put(entity.failure(email, error));
+  }
+}
+
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
-const loginUserAsync = fetchEntity.bind(null, loginUser, api.loginUser);
+const loginUserAsync = loginUserSaga.bind(null, loginUser, api.loginUser);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
 
 function* loadLearnables(username) {

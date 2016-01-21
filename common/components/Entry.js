@@ -24,6 +24,7 @@ export default class Entry extends Component {
         <TextField
           floatingLabelText="Email"
           ref={(c) => this._email = c}
+          defaultValue="iam.preethi.k@gmail.com"
         />
       <RaisedButton
         onClick={this.handleLoginClick}

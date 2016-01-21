@@ -38,15 +38,11 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  dispatch: PropTypes.func,
+  dispatch: PropTypes.func.isRequired,
   children: PropTypes.node,
   isLoggedIn: PropTypes.bool,
-  loadUserPage: PropTypes.func.isRequired,
-  loginUser: PropTypes.func.isRequired,
   location: PropTypes.object,
   updateRouterState: PropTypes.func,
-  getInputValue: PropTypes.func,
-  facebookLoginRequested: PropTypes.bool,
 };
 
 function mapStateToProps(state) {

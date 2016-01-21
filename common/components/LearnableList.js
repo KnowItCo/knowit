@@ -22,5 +22,5 @@ export default class LearnableList extends Component {
 }
 
 LearnableList.propTypes = {
-  learnables: PropTypes.array.isRequired,
+  learnables: PropTypes.array,
 };
