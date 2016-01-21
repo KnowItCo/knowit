@@ -25,6 +25,8 @@ export default class Input extends Component {
     const tags = this._tag.getValue();
     const learnable = this._learnable.getValue();
     this.props.addNewLearnable(learnable, tags);
+    this._tag.clearValue();
+    this._learnable.clearValue();
   }
 
   // TODO: ADD AUTOCOMPLETE FOR TAGS

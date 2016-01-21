@@ -11,6 +11,7 @@ export default class Entry extends Component {
 
   handleLoginClick() {
     this.props.onLoginClick(this._email.getValue());
+    this._email.clearValue();
   }
 
   render() {
