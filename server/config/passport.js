@@ -2,6 +2,9 @@ var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
 var session = require('express-session');
 var secrets = require('./../secrets');
+var db = require('./../db/config').db;
+var sqlAddUser = require('./../db/queries').sqlAddUser;
+var sqlFindUser = require('./../db/queries').sqlFindUser;
 
 // Setting API keys
 if (process.env.NODE_ENV === 'production') {
@@ -41,15 +44,31 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
     clientID: FACEBOOK_APP_ID,
     clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: CALLBACK_URL
+    callbackURL: CALLBACK_URL,
+    profileFields: ['emails', 'name']
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
+      return db.query(sqlFindUser, { username: profile.name.givenName, email: profile.emails[0].value })
+        .then(function(user) {
+          if (user[0] !== undefined) {
+            return user;
+          } else {
+            console.log(profile);
+            db.query(sqlAddUser, { username: profile.name.givenName, firstname: profile.name.givenName, lastname: profile.name.familyName, email: profile.emails[0].value });
 
-      // TODO: associate the Facebook account with a user
-      // record in database, and return that user instead.
-      return done(null, profile);
+            return db.query(sqlFindUser, { username: profile.name.givenName, email: profile.emails[0].value });
+          }
+        })
+        .then(function(user) {
+          console.log(user, 'user2');
+          return done(null, user);
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+
     });
   }
 ));
