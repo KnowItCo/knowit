@@ -41,7 +41,7 @@ export const getLearnables = {
 
 export const addLearnable = {
   request: (email, learnable, tags) => action(ADD_LEARNABLE.REQUEST, { email, learnable, tags }),
-  success: (email, response) => action(ADD_LEARNABLE.SUCCESS, { email, response }),
+  success: (email, confirmation) => action(ADD_LEARNABLE.SUCCESS, { email, confirmation }),
   failure: (email, error) => action(ADD_LEARNABLE.FAILURE, { email, error }),
 };
 

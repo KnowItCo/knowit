@@ -26,9 +26,9 @@ function* fetchEntity(entity, apiFn, id) {
 }
 
 function* addLearnableSaga(entity, apiCall, email, learnable, tags) {
-  const { response, error } = yield call(apiCall, email, learnable, tags);
+  const { confirmation, error } = yield call(apiCall, email, learnable, tags);
   if (!error) {
-    yield put(entity.success(email, response));
+    yield put(entity.success(email, confirmation));
   } else {
     yield put(entity.failure(email, error));
   }

@@ -9,7 +9,7 @@ export default class LearnableList extends Component {
 
   render() {
     const { learnables } = this.props;
-    const learnablesList = learnables.map((learnable, index) => <Learnable key={index} text={learnable.text} />);
+    const learnablesList = learnables.map((learnable, index) => <Learnable key={index} text={learnable.text} tags={learnable.tags}/>);
 
     return (
       <div>

@@ -47,7 +47,7 @@ export default class Learnable extends Component {
         <ListItem
           leftAvatar={<Avatar src="../../images/logo.jpeg" />}
           rightIconButton={rightIconMenu}
-          primaryText="Heading"
+          primaryText={this.props.tags[0]}
           secondaryText={
             <p>
               {this.props.text}
@@ -63,4 +63,5 @@ export default class Learnable extends Component {
 
 Learnable.propTypes = {
   text: PropTypes.string.isRequired,
+  tags: PropTypes.array.isRequired,
 };

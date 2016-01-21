@@ -35,16 +35,16 @@ function addLearnableAsync(email, learnable, tags) {
     tags,
     email,
   })
-    .then(function (response) {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return response;
-    })
-    .then(
-      response => ({ response }),
-      error => ({ error: error.message || 'Something shitty happened' })
-    );
+  .then(function (response) {
+    if (response.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    return response;
+  })
+  .then(
+    confirmation => ({ confirmation }),
+    error => ({ error: error.message || 'Something shitty happened' })
+  );
 }
 
 // api services

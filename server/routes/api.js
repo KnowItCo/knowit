@@ -21,9 +21,9 @@ module.exports = function (app) {
     const email = req.body.email;
     const tags = req.body.tags;
 
-    // TODO: Figure out how to parse ARRAY of tags
     const learnable = {
       text: req.body.text,
+      tags: '{' + tags + '}',
     };
     db.query(sqlFindStudentId, { email })
       .then(id => {
@@ -38,7 +38,7 @@ module.exports = function (app) {
         return db.query(sqlAddLearnable, learnable)
       })
       .then(() => {
-        res.send('Sucess!');
+        res.send('Success!');
       })
       .catch(error => {
         console.log('ERROR: ', error);
