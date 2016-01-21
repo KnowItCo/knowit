@@ -10,5 +10,7 @@ module.exports = {
   sqlAddUser: sql(path.join(__dirname, 'insertStudent.sql')),
   sqlFindUser: sql(path.join(__dirname, 'findStudent.sql')),
   sqlAddLearnable: sql(path.join(__dirname, 'addLearnable.sql')),
-  sqlFindStudentId: sql(path.join(__dirname, 'findStudentId.sql'))
+  sqlFindStudentId: sql(path.join(__dirname, 'findStudentId.sql')),
+  sqlGetLearnablesById: sql(path.join(__dirname, 'getLearnablesById')),
+  sqlFindStudentById: sql(path.join(__dirname, 'findStudentById'))
 };

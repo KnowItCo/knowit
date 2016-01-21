@@ -2,18 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 
-// <input
-//   ref="input"
-//   defaultValue="iam.preethi.k@gmail.com"
-//   style={textFieldStyle}
-// />
-// const textFieldStyle = {
-//   width: 200,
-//   position: 'relative',
-//   paddingBottom: 10,
-// };
-
-
 export default class Entry extends Component {
   constructor(props) {
     super(props);

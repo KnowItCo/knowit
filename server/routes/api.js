@@ -3,6 +3,8 @@ var pgp = require('./../db/config').pgp;
 var sqlAddUser = require('./../db/queries').sqlAddUser;
 var sqlFindStudentId = require('./../db/queries').sqlFindStudentId;
 var sqlAddLearnable = require('./../db/queries').sqlAddLearnable;
+var sqlGetLearnablesById = require('./../db/queries').sqlGetLearnablesById;
+var sqlFindStudentById = require('./../db/queries').sqlFindStudentById;
 
 module.exports = function (app) {
   app.post('/student', function (req, res) {
@@ -43,9 +45,20 @@ module.exports = function (app) {
       });
   });
 
-  app.get('/learnable', function (req, res) {
-    db.query('SELECT * from knowit_schema.learnable')
-      .then(learnables => {
+  app.get('/learnable/:email', function (req, res) {
+    const email = req.params.email;
+    db.query(sqlFindStudentId, { email })
+      .then(id => {
+        if (!id) {
+          throw new Error('Could not find user in database. ' + error);
+        } else {
+          return id[0].id;
+        }
+      })
+      .then(id => {
+        return db.query('SELECT * FROM knowit_schema.learnable WHERE userid=${userid}', { userid: id })
+      })
+      .then((learnables) => {
         res.json(learnables);
       })
       .catch(error => {
@@ -58,6 +71,26 @@ module.exports = function (app) {
     db.query('SELECT * from knowit_schema.student WHERE email=${email}', { email })
       .then(student => {
         res.json(student);
+      })
+      .catch(error => {
+        res.sendStatus(501, error);
+      });
+  });
+
+  app.get('/learnable', function (req, res) {
+    db.query('SELECT * from knowit_schema.learnable')
+      .then(learnables => {
+        res.json(learnables);
+      })
+      .catch(error => {
+        res.sendStatus(501, error);
+      });
+  });
+
+  app.get('/student', function (req, res) {
+    db.query('SELECT * from knowit_schema.student')
+      .then(students => {
+        res.json(students);
       })
       .catch(error => {
         res.sendStatus(501, error);

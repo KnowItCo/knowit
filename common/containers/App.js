@@ -4,7 +4,6 @@ import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
 import Entry from '../components/Entry';
-// import Profile from './Profile';
 
 export default class App extends Component {
   constructor(props) {

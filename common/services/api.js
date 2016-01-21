@@ -1,38 +1,18 @@
 import 'isomorphic-fetch';
-import Firebase from 'firebase';
 import axios from 'axios';
 
-function getFirebaseData(url) {
-  // assuming they have firebase source included in html file
-  const ref = new Firebase(url);
-
-  return new Promise((resolve, reject) => {
-    ref.on('value', (snapshot) => {
-      const data = snapshot.val();
-      if (!data) {
-        reject('Firebase data failed to load :(');
-      } else {
-        resolve(data);
+function fetchLearnablesAsync(email) {
+  return axios('/api/learnable/' + email)
+    .then(function (response) {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
       }
-    });
-  });
-}
-
-function callApi(username) {
-  // this needs to be updated, obviously. Right now just
-  // faking it to get sagas to work
-  console.log(username);
-  return getFirebaseData('https://knowittwo.firebaseio.com/')
-          .then(response => {
-            if (response.status > 400) {
-              throw new Error('sorry');
-            }
-            return response;
-          })
-          .then(
-            response => ({ response }),
-            error => ({ error: error.message || 'Something shitty happened' })
-          );
+      return response;
+    })
+    .then(
+      response => ({ response }),
+      error => ({ error: error.message || 'Something shitty happened' })
+    );
 }
 
 function loginUserAsync(email) {
@@ -41,7 +21,6 @@ function loginUserAsync(email) {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
-      console.log(response, 'response');
       return response;
     })
     .then(
@@ -51,7 +30,6 @@ function loginUserAsync(email) {
 }
 
 function addLearnableAsync(email, learnable, tags) {
-  console.log(learnable, tags, email);
   return axios.post('/api/learnable/', {
     text: learnable,
     tags,
@@ -70,6 +48,6 @@ function addLearnableAsync(email, learnable, tags) {
 }
 
 // api services
-export const fetchLearnables = username => callApi(username);
-export const loginUser = username => loginUserAsync(username);
+export const fetchLearnables = email => fetchLearnablesAsync(email);
+export const loginUser = email => loginUserAsync(email);
 export const addLearnable = (learnable, tags, email) => addLearnableAsync(learnable, tags, email);

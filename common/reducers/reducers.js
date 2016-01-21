@@ -61,7 +61,7 @@ function addLearnable(state = { email: null, learnableBeingAdded: false, learnab
 
 function entities(state = { learnables: {} }, action) {
   if (action.response) {
-    return merge({}, state, { learnables: action.response });
+    return merge({}, state, { learnables: action.response.data });
   }
 
   return state;
