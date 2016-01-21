@@ -55,18 +55,16 @@ passport.use(new FacebookStrategy({
           if (user[0] !== undefined) {
             return user;
           } else {
-            console.log(profile);
             db.query(sqlAddUser, { username: profile.name.givenName, firstname: profile.name.givenName, lastname: profile.name.familyName, email: profile.emails[0].value });
 
             return db.query(sqlFindUser, { username: profile.name.givenName, email: profile.emails[0].value });
           }
         })
         .then(function(user) {
-          console.log(user, 'user2');
           return done(null, user);
         })
         .catch(function(error) {
-            console.log(error);
+            throw new Error('Welp, we had an error processing you.' + error);
         });
 
     });
