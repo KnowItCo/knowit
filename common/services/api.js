@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import Firebase from 'firebase';
-// import axios from 'axios';
+import axios from 'axios';
 
 function getFirebaseData(url) {
   // assuming they have firebase source included in html file
@@ -35,13 +35,13 @@ function callApi(username) {
           );
 }
 
-function loginUserAsync() {
-  return fetch('/auth/checkAuth')
+function loginUserAsync(email) {
+  return axios('/api/student?EMAIL=' + email)
           .then(function (response) {
             if (response.status >= 400) {
               throw new Error('Bad response from server');
             }
-            console.log('response');
+            console.log(response);
             return response;
           })
           .then(

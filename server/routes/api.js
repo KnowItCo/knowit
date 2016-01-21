@@ -14,9 +14,10 @@ module.exports = function (app) {
   });
 
   app.get('/student', function (req, res) {
-    db.query('SELECT * from knowit_schema.student')
-      .then(students => {
-        res.json(students);
+    const email = req.param.email;
+    db.query('SELECT * from knowit_schema.student WHERE email=${email}', { email })
+      .then(student => {
+        res.json(student);
       })
       .catch(error => {
         res.sendStatus(501, error);

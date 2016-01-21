@@ -26,6 +26,7 @@ export default class Input extends Component {
             hintText="Learnable"
             floatingLabelText="Enter a new learnable"
             multiLine
+            rows={3}
             style={textFieldStyle}
           />
         </div>

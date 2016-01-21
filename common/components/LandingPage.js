@@ -18,7 +18,7 @@ export default class LandingPage extends Component {
             Know everything
           </h1>
           <ul>
-            <a href="/auth/facebook" className="btn btn-info" role="button" onClick={this.props.onFacebookLoginClick}>Login with Facebook</a>
+            <a href="/auth/facebook" className="btn btn-info" role="button">Login with Facebook</a>
           </ul>
         </div>
       </div>

@@ -13,14 +13,10 @@ export default class App extends Component {
     this.onLoginClick = this.onLoginClick.bind(this);
   }
 
-  onLoginClick() {
+  onLoginClick(email) {
     const { dispatch } = this.props;
-    const action = ActionCreators.loginUser.request(this.getInputValue());
+    const action = ActionCreators.loginUser.request(email);
     dispatch(action);
-  }
-
-  getInputValue() {
-    return this.refs.input.value;
   }
 
   render() {
@@ -31,9 +27,7 @@ export default class App extends Component {
         {!this.props.isLoggedIn &&
           <div>
             <input ref="input" placeholder="Enter your username"></input>
-            <LandingPage
-              onFacebookLoginClick={this.onFacebookLoginClick}
-            />
+            <LandingPage />
             <Entry
               onLoginClick={this.onLoginClick}
             />

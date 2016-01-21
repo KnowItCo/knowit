@@ -28,9 +28,9 @@ function action(type, payload = {}) {
 
 
 export const loginUser = {
-  request: () => action(LOGIN.REQUEST, { }),
-  success: (username, response) => action(LOGIN.SUCCESS, { username, response }),
-  failure: (username, error) => action(LOGIN.FAILURE, { username, error }),
+  request: (email) => action(LOGIN.REQUEST, { email }),
+  success: (email, response) => action(LOGIN.SUCCESS, { email, response }),
+  failure: (email, error) => action(LOGIN.FAILURE, { email, error }),
 };
 
 export const learnable = {
