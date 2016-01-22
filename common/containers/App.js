@@ -4,6 +4,8 @@ import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
 import Entry from '../components/Entry';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 export default class App extends Component {
   constructor(props) {

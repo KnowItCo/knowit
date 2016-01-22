@@ -5,6 +5,7 @@ var sqlFindStudentId = require('./../db/queries').sqlFindStudentId;
 var sqlAddLearnable = require('./../db/queries').sqlAddLearnable;
 var sqlGetLearnablesById = require('./../db/queries').sqlGetLearnablesById;
 var sqlFindStudentById = require('./../db/queries').sqlFindStudentById;
+var sqlDeleteLearnableById = require('./../db/queries').sqlDeleteLearnableById;
 
 module.exports = function (app) {
   app.post('/student', function (req, res) {
@@ -71,6 +72,17 @@ module.exports = function (app) {
     db.query('SELECT * from knowit_schema.student WHERE email=${email}', { email })
       .then(student => {
         res.json(student);
+      })
+      .catch(error => {
+        res.sendStatus(501, error);
+      });
+  });
+
+  app.delete('/learnable/:id', function(req, res) {
+    const id = req.params.id;
+    db.query('DELETE FROM knowit_schema.learnable WHERE id=${id}', { id })
+      .then(() => {
+        res.send('Successfully deleted!');
       })
       .catch(error => {
         res.sendStatus(501, error);

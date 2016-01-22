@@ -19,6 +19,7 @@ export const ADD_LEARNABLE = createRequestType('ADD_LEARNABLE');
 export const LOAD_USER_PAGE = 'LOAD_USER_PAGE';
 export const UPDATE_ROUTER_STATE = 'UPDATE_ROUTER_STATE';
 export const NAVIGATE = 'NAVIGATE';
+export const DELETE_LEARNABLE = createRequestType('DELETE_LEARNABLE');
 
 // Return action with payload. Payload defaults to empty object if
 // none passed in
@@ -43,6 +44,12 @@ export const addLearnable = {
   request: (email, learnable, tags) => action(ADD_LEARNABLE.REQUEST, { email, learnable, tags }),
   success: (email, confirmation) => action(ADD_LEARNABLE.SUCCESS, { email, confirmation }),
   failure: (email, error) => action(ADD_LEARNABLE.FAILURE, { email, error }),
+};
+
+export const deleteLearnable = {
+  request: (learnableid, email) => action(DELETE_LEARNABLE.REQUEST, { learnableid, email }),
+  success: (learnableid, confirmation) => action(DELETE_LEARNABLE.SUCCESS, { learnableid, confirmation }),
+  failure: (learnableid, error) => action(DELETE_LEARNABLE.FAILURE, { learnableid, error }),
 };
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });

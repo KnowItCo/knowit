@@ -13,6 +13,7 @@ export default class Profile extends Component {
     };
 
     this.addNewLearnable = this.addNewLearnable.bind(this);
+    this.deleteLearnable = this.deleteLearnable.bind(this);
   }
 
   componentWillMount() {
@@ -23,6 +24,12 @@ export default class Profile extends Component {
   addNewLearnable(learnable, tags) {
     const { dispatch } = this.props;
     const action = ActionCreators.addLearnable.request(this.props.email, learnable, tags);
+    dispatch(action);
+  }
+
+  deleteLearnable(learnableid) {
+    const { dispatch } = this.props;
+    const action = ActionCreators.deleteLearnable.request(learnableid, this.props.email);
     dispatch(action);
   }
 
@@ -44,7 +51,10 @@ export default class Profile extends Component {
             tags={this.state.tags}
             addNewLearnable={this.addNewLearnable}
           />
-        <LearnableList learnables={this.props.learnables} />
+        <LearnableList
+          learnables={this.props.learnables}
+          deleteLearnable={this.deleteLearnable}
+        />
         </div>
       </div>
     );

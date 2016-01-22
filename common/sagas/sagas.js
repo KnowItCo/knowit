@@ -5,16 +5,12 @@ import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { getLearnables, loginUser, addLearnable } = actions;
+const { getLearnables, loginUser, addLearnable, deleteLearnable } = actions;
 // const { learnable } = actions;
 
 /* Subroutines */
 
-// resuable fetch Subroutine
-// entity : learnable
-// apiFn  : api.fetchlearnables
-// id     : email
-
+// Resuable fetch Subroutine for fetching entities (e.g. learnables)
 // calling action creators
 function* fetchEntity(entity, apiFn, id) {
   yield put(entity.request(id));
@@ -44,9 +40,19 @@ function* loginUserSaga(entity, apiCall, email) {
   }
 }
 
+function* deleteLearnableSaga(entity, apiCall, learnableid) {
+  const { confirmation, error } = yield call(apiCall, learnableid);
+  if (!error) {
+    yield put(entity.success(learnableid, confirmation));
+  } else {
+    yield put(entity.failure(learnableid, error));
+  }
+}
+
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
 const loginUserAsync = loginUserSaga.bind(null, loginUser, api.loginUser);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
+const deleteLearnableAsync = deleteLearnableSaga.bind(null, deleteLearnable, api.deleteLearnable);
 
 function* loadLearnables(username) {
   yield call(fetchLearnables, username);
@@ -58,6 +64,10 @@ function* loadLoginUser(email) {
 
 function* loadAddLearnable(email, learnable, tags) {
   yield call(addLearnableAsync, email, learnable, tags);
+}
+
+function* loadDeleteLearnable(learnableid) {
+  yield call(deleteLearnableAsync, learnableid);
 }
 
 // Fetches login and learnables for a User
@@ -79,6 +89,16 @@ function* watchaddLearnable() {
     yield call(loadLearnables, email);
   }
 }
+
+// Deletes a learnable for a User
+function* watchdeleteLearnable() {
+  while (true) {
+    const { learnableid, email } = yield take(actions.DELETE_LEARNABLE.REQUEST);
+    yield call(loadDeleteLearnable, learnableid);
+    yield call(loadLearnables, email);
+  }
+}
+
 
 // Watches for failed login, Redirect to landing page
 function* watchFailureLogin() {
@@ -104,6 +124,7 @@ export default function* root(getState) {
   yield fork(watchFailureLogin);
   yield fork(watchLoadUserPage, getLearnables);
   yield fork(watchaddLearnable, getLearnables);
+  yield fork(watchdeleteLearnable, getLearnables);
 }
 
 // https://github.com/yelouafi/redux-saga/issues/14

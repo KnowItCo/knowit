@@ -59,6 +59,29 @@ function addLearnable(state = { email: null, learnableBeingAdded: false, learnab
   }
 }
 
+function deleteLearnable(state = { learnableBeingDeleted: false, learnableDeleted: false, error: null }, action) {
+  switch (action.type) {
+    case ActionTypes.DELETE_LEARNABLE.REQUEST:
+      return merge({}, state, {
+        learnableBeingDeleted: true,
+        learnableDeleted: false,
+      });
+    case ActionTypes.ADD_LEARNABLE.SUCCESS:
+      return merge({}, state, {
+        learnableBeingDeleted: false,
+        learnableDeleted: true,
+      });
+    case ActionTypes.ADD_LEARNABLE.FAILURE:
+      return merge({}, state, {
+        learnableBeingDeleted: false,
+        learnableDeleted: false,
+        error: action.error,
+      });
+    default:
+      return state;
+  }
+}
+
 function fetchLearnables(state = { email: null, learnables: [], fetchingLearnables: false, fetchedLearnables: false, error: null }, action) {
   switch (action.type) {
     case ActionTypes.GET_LEARNABLES.REQUEST:
@@ -105,6 +128,7 @@ const rootReducer = combineReducers({
   login,
   addLearnable,
   fetchLearnables,
+  deleteLearnable,
   router,
   entities,
 });

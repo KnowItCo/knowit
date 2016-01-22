@@ -15,10 +15,14 @@ CREATE TABLE knowit_schema.learnable
 (
   id serial PRIMARY KEY,
   text text NOT NULL,
-  createdAt date NOT NULL,
+  createdAt timestamp DEFAULT current_timestamp,
   tags text ARRAY DEFAULT ARRAY['General'],
   userid integer NOT NULL REFERENCES knowit_schema.student (id)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 COMMIT;
+
+ALTER TABLE knowit_schema.learnable
+    ALTER COLUMN createdat TYPE timestamp with time zone,
+    ALTER COLUMN createdat SET DEFAULT now();
