@@ -1,5 +1,6 @@
 import * as ActionTypes from './../actions/actions';
 import merge from 'lodash/merge';
+import { groupByTags } from './../../utils/helpers';
 import { combineReducers } from 'redux';
 
 // Updates an entity cache in response to any action with response.entities
@@ -107,9 +108,10 @@ function fetchLearnables(state = { email: null, learnables: [], fetchingLearnabl
   }
 }
 
-function entities(state = { learnables: {} }, action) {
+function entities(state = { learnables: {}, tags: [] }, action) {
   if (action.response) {
-    return merge({}, state, { learnables: action.response.data });
+    const tagsGrouped = groupByTags(action.response.data, 'tags');
+    return merge({}, state, { learnables: action.response.data, tags: tagsGrouped });
   }
 
   return state;

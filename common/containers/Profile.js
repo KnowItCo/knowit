@@ -4,26 +4,17 @@ import * as ActionCreators from '../actions/actions';
 import LearnableList from '../components/LearnableList';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
-import * as counter from './../test';
 
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      tags: ['General', 'tag1', 'tag2', 'tag3', 'tag4'],
-    };
 
     this.addNewLearnable = this.addNewLearnable.bind(this);
     this.deleteLearnable = this.deleteLearnable.bind(this);
   }
 
   componentWillMount() {
-    console.log(counter.counter); // 1
-    counter.increment();
-    console.log(counter.counter); // 2
 
-    const tags = this.state.tags || [];
-    this.setState({ tags });
   }
 
   addNewLearnable(learnable, tags) {
@@ -49,11 +40,13 @@ export default class Profile extends Component {
     return (
       <div className="main-container">
         <div className="col-md-4 col-xs-6">
-          <LeftNavBar />
+          <LeftNavBar
+            tags={this.props.tags}
+          />
         </div>
         <div className="col-md-8 col-xs-12" style={{ paddingTop: 70 }}>
           <Input
-            tags={this.state.tags}
+            tags={this.props.tags}
             addNewLearnable={this.addNewLearnable}
           />
         <LearnableList
@@ -71,6 +64,7 @@ Profile.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   learnables: PropTypes.array,
+  tags: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
 };
@@ -78,7 +72,7 @@ Profile.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    tags: state.tags,
+    tags: state.entities.tags[0] === undefined ? ['General'] : state.entities.tags,
     learnables: state.entities.learnables[0] === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
     email: state.login.email,
   };

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import LeftNav from 'material-ui/lib/left-nav';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import TagItem from './TagItem';
 
 export default class LeftNavBar extends Component {
   constructor(props) {
@@ -31,17 +31,25 @@ export default class LeftNavBar extends Component {
       docked: true,
     };
 
+    console.log(this.props.tags);
+
+    const menuItems = this.props.tags.map(function (tag) {
+      return <TagItem tag={tag} />;
+    });
+
     return (
       <div>
         <LeftNav
           open={this.state.open}
           style={style}
         >
-          <MenuItem>General</MenuItem>
-          <MenuItem>Tag 1</MenuItem>
-          <MenuItem>Tag 2</MenuItem>
+          {menuItems}
         </LeftNav>
       </div>
     );
   }
 }
+
+LeftNavBar.propTypes = {
+  tags: PropTypes.array,
+};
