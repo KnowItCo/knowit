@@ -68,7 +68,7 @@ require('./server/routes/api')(apiRoute);
 
 app.use(express.static(path.join(__dirname, 'static')));
 
-app.get('/entry', function(req, res) {
+app.get('/profile/*', function(req, res) {
   res.sendFile(path.join(__dirname + '/index.html'));
 });
 

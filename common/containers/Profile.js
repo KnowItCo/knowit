@@ -4,6 +4,7 @@ import * as ActionCreators from '../actions/actions';
 import LearnableList from '../components/LearnableList';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
+import * as counter from './../test';
 
 export default class Profile extends Component {
   constructor(props) {
@@ -17,6 +18,10 @@ export default class Profile extends Component {
   }
 
   componentWillMount() {
+    console.log(counter.counter); // 1
+    counter.increment();
+    console.log(counter.counter); // 2
+
     const tags = this.state.tags || [];
     this.setState({ tags });
   }
