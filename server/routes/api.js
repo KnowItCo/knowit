@@ -9,7 +9,7 @@ var sqlDeleteLearnableById = require('./../db/queries').sqlDeleteLearnableById;
 
 module.exports = function (app) {
   app.post('/student', function (req, res) {
-    db.query(sqlAddUser, {username: 'New Preethi', firstname: 'Fake', lastname: 'Name', email: 'lalala@gmail.com'})
+    db.query(sqlAddUser, { firstname: 'Fake', lastname: 'Name', email: 'lalala@gmail.com'})
         .then(() => {
             res.send('success!');
         })

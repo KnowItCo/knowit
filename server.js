@@ -19,12 +19,6 @@ var app = express();
 app.use(cookieParser());
 var port = 8888;
 
-if (process.env.NODE_ENV === 'production') {
-  var SESSION_SECRET = process.env.SESSION_SECRET;
-} else {
-  var SESSION_SECRET = secrets.SESSION_SECRET;
-}
-
 var redisOptions = {
   host: 'localhost',
   port: 6379,
@@ -42,7 +36,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Config express sessions
 app.use(session({
   store: new RedisStore(redisOptions),
-  secret: SESSION_SECRET,
+  secret: secrets.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
   cookie: { httpOnly: true, maxAge: 2419200000 }
@@ -84,10 +78,3 @@ app.listen(port, function(error) {
     console.info("==> 🌎  Listening on port %s. Open up http://localhost:%s/ in your browser.", port, port)
   }
 });
-
-// app.get('/stylesheets/lib/bootstrap.min.css', function (req, res) {
-//   res.setHeader('text/css');
-//   console.log('got here');
-//   res.sendFile(path.join(__dirname, 'stylesheets/lib/bootstrap.min.css'));
-// });
-//

@@ -1,1 +1,1 @@
-INSERT INTO knowit_schema.student(username, firstname, lastname, email) VALUES (${username}, ${firstname}, ${lastname}, ${email})
+INSERT INTO knowit_schema.student(firstname, lastname, email) VALUES (${firstname}, ${lastname}, ${email})
