@@ -32,14 +32,15 @@ app.use(webpackHotMiddleware(compiler));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
 
 // Config express sessions
 app.use(session({
-  store: new RedisStore(redisOptions),
   secret: secrets.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
-  cookie: { httpOnly: true, maxAge: 2419200000 }
+  cookie: { httpOnly: true, maxAge: 2419200000 },
+  store: new RedisStore(redisOptions),
 }));
 
 // Inits passport sessions.

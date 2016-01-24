@@ -14,6 +14,12 @@ export default class App extends Component {
     this.onLoginClick = this.onLoginClick.bind(this);
   }
 
+  componentWillMount() {
+    const { dispatch } = this.props;
+    const action = ActionCreators.checkAuthUser.request();
+    dispatch(action);
+  }
+
   onLoginClick(email) {
     const { dispatch } = this.props;
     const action = ActionCreators.loginUser.request(email);
@@ -50,7 +56,6 @@ App.propTypes = {
 function mapStateToProps(state) {
   return {
     isLoggedIn: state.login.isLoggedIn,
-    facebookLoginRequested: state.facebookLoginRequested,
   };
 }
 

@@ -5,7 +5,7 @@ import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { getLearnables, loginUser, addLearnable, deleteLearnable } = actions;
+const { getLearnables, loginUser, addLearnable, deleteLearnable, checkAuthUser } = actions;
 // const { learnable } = actions;
 
 /* Subroutines */
@@ -40,6 +40,15 @@ function* loginUserSaga(entity, apiCall, email) {
   }
 }
 
+function* checkAuthSaga(entity, apiCall) {
+  const { confirmation, error } = yield call(apiCall);
+  if (!error) {
+    yield put(entity.success(confirmation));
+  } else {
+    yield put(entity.failure(error));
+  }
+}
+
 function* deleteLearnableSaga(entity, apiCall, learnableid) {
   const { confirmation, error } = yield call(apiCall, learnableid);
   if (!error) {
@@ -51,6 +60,7 @@ function* deleteLearnableSaga(entity, apiCall, learnableid) {
 
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
 const loginUserAsync = loginUserSaga.bind(null, loginUser, api.loginUser);
+const checkAuthAsync = checkAuthSaga.bind(null, checkAuthUser, api.checkAuth);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
 const deleteLearnableAsync = deleteLearnableSaga.bind(null, deleteLearnable, api.deleteLearnable);
 
@@ -60,6 +70,10 @@ function* loadLearnables(username) {
 
 function* loadLoginUser(email) {
   yield call(loginUserAsync, email);
+}
+
+function* loadcheckAuth() {
+  yield call(checkAuthAsync);
 }
 
 function* loadAddLearnable(email, learnable, tags) {
@@ -78,6 +92,17 @@ function* watchLoadUserPage() {
     yield call(loadLearnables, email);
     yield put(actions.navigate(`/profile/${email}`));
     yield history.push(`/profile/${email}`);
+  }
+}
+
+// Fetches login and learnables for a User
+function* watchCheckAuthRequest() {
+  while (true) {
+    yield take(actions.AUTH_CHECK.REQUEST);
+    yield call(loadcheckAuth);
+    yield call(loadLearnables, 'iam.preethi.k@gmail.com'); // TODO
+    yield put(actions.navigate('/profile/iam.preethi.k@gmail.com'));
+    yield history.push('/profile/iam.preethi.k@gmail.com');
   }
 }
 
@@ -125,6 +150,7 @@ export default function* root(getState) {
   yield fork(watchLoadUserPage, getLearnables);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);
+  yield fork(watchCheckAuthRequest, getLearnables);
 }
 
 // https://github.com/yelouafi/redux-saga/issues/14

@@ -31,8 +31,6 @@ export default class LeftNavBar extends Component {
       docked: true,
     };
 
-    console.log(this.props.tags);
-
     const menuItems = this.props.tags.map(function (tag) {
       return <TagItem tag={tag} />;
     });

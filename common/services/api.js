@@ -29,6 +29,22 @@ function loginUserAsync(email) {
     );
 }
 
+function checkAuthAsync() {
+  console.log('got here');
+  return axios('/auth/checkAuth/')
+    .then(function (response) {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      console.log(response);
+      return response;
+    })
+    .then(
+      confirmation => ({ confirmation }),
+      error => ({ error: error.message || 'Something shitty happened' })
+    );
+}
+
 function addLearnableAsync(email, learnable, tags) {
   return axios.post('/api/learnable/', {
     text: learnable,
@@ -66,3 +82,4 @@ export const fetchLearnables = email => fetchLearnablesAsync(email);
 export const loginUser = email => loginUserAsync(email);
 export const addLearnable = (learnable, tags, email) => addLearnableAsync(learnable, tags, email);
 export const deleteLearnable = learnableid => deleteLearnableAsync(learnableid);
+export const checkAuth = () => checkAuthAsync();

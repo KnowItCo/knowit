@@ -20,6 +20,7 @@ export const LOAD_USER_PAGE = 'LOAD_USER_PAGE';
 export const UPDATE_ROUTER_STATE = 'UPDATE_ROUTER_STATE';
 export const NAVIGATE = 'NAVIGATE';
 export const DELETE_LEARNABLE = createRequestType('DELETE_LEARNABLE');
+export const AUTH_CHECK = createRequestType('AUTH_CHECK');
 
 // Return action with payload. Payload defaults to empty object if
 // none passed in
@@ -32,6 +33,12 @@ export const loginUser = {
   request: (email) => action(LOGIN.REQUEST, { email }),
   success: (email, confirmation) => action(LOGIN.SUCCESS, { email, confirmation }),
   failure: (email, error) => action(LOGIN.FAILURE, { email, error }),
+};
+
+export const checkAuthUser = {
+  request: () => action(AUTH_CHECK.REQUEST, { }),
+  success: (confirmation) => action(AUTH_CHECK.SUCCESS, { confirmation }),
+  failure: (error) => action(AUTH_CHECK.FAILURE, { error }),
 };
 
 export const getLearnables = {
