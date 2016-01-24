@@ -5,38 +5,29 @@ import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { getLearnables, loginUser, addLearnable, deleteLearnable, checkAuthUser } = actions;
+const { getLearnables, addLearnable, deleteLearnable, checkAuthUser } = actions;
 // const { learnable } = actions;
 
 /* Subroutines */
 
 // Resuable fetch Subroutine for fetching entities (e.g. learnables)
 // calling action creators
-function* fetchEntity(entity, apiFn, id) {
-  yield put(entity.request(id));
-  const { response, error } = yield call(apiFn, id);
+function* fetchEntity(entity, apiFn) {
+  yield put(entity.request());
+  const { response, error } = yield call(apiFn);
   if (!error) {
-    yield put(entity.success(id, response));
+    yield put(entity.success(response));
   } else {
-    yield put(entity.failure(id, error));
+    yield put(entity.failure(error));
   }
 }
 
-function* addLearnableSaga(entity, apiCall, email, learnable, tags) {
-  const { confirmation, error } = yield call(apiCall, email, learnable, tags);
+function* addLearnableSaga(entity, apiCall, learnable, tags) {
+  const { confirmation, error } = yield call(apiCall, learnable, tags);
   if (!error) {
-    yield put(entity.success(email, confirmation));
+    yield put(entity.success(confirmation));
   } else {
-    yield put(entity.failure(email, error));
-  }
-}
-
-function* loginUserSaga(entity, apiCall, email) {
-  const { confirmation, error } = yield call(apiCall, email);
-  if (!error) {
-    yield put(entity.success(email, confirmation));
-  } else {
-    yield put(entity.failure(email, error));
+    yield put(entity.failure(error));
   }
 }
 
@@ -59,25 +50,20 @@ function* deleteLearnableSaga(entity, apiCall, learnableid) {
 }
 
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
-const loginUserAsync = loginUserSaga.bind(null, loginUser, api.loginUser);
 const checkAuthAsync = checkAuthSaga.bind(null, checkAuthUser, api.checkAuth);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
 const deleteLearnableAsync = deleteLearnableSaga.bind(null, deleteLearnable, api.deleteLearnable);
 
-function* loadLearnables(username) {
-  yield call(fetchLearnables, username);
-}
-
-function* loadLoginUser(email) {
-  yield call(loginUserAsync, email);
+function* loadLearnables() {
+  yield call(fetchLearnables);
 }
 
 function* loadcheckAuth() {
   yield call(checkAuthAsync);
 }
 
-function* loadAddLearnable(email, learnable, tags) {
-  yield call(addLearnableAsync, email, learnable, tags);
+function* loadAddLearnable(learnable, tags) {
+  yield call(addLearnableAsync, learnable, tags);
 }
 
 function* loadDeleteLearnable(learnableid) {
@@ -85,42 +71,38 @@ function* loadDeleteLearnable(learnableid) {
 }
 
 // Fetches login and learnables for a User
-function* watchLoadUserPage() {
-  while (true) {
-    const { email } = yield take(actions.LOGIN.REQUEST);
-    yield call(loadLoginUser, email);
-    yield call(loadLearnables, email);
-    yield put(actions.navigate(`/profile/${email}`));
-    yield history.push(`/profile/${email}`);
-  }
-}
-
-// Fetches login and learnables for a User
 function* watchCheckAuthRequest() {
   while (true) {
     yield take(actions.AUTH_CHECK.REQUEST);
     yield call(loadcheckAuth);
-    yield call(loadLearnables, 'iam.preethi.k@gmail.com'); // TODO
-    yield put(actions.navigate('/profile/iam.preethi.k@gmail.com'));
-    yield history.push('/profile/iam.preethi.k@gmail.com');
+  }
+}
+
+// Fetches login and learnables for a User
+function* watchCheckAuthSuccess() {
+  while (true) {
+    const { confirmation } = yield take(actions.AUTH_CHECK.SUCCESS);
+    yield call(loadLearnables); // TODO
+    yield put(actions.navigate('/profile'));
+    yield history.push('/profile');
   }
 }
 
 // Adds a new learnable for a User
 function* watchaddLearnable() {
   while (true) {
-    const { email, learnable, tags } = yield take(actions.ADD_LEARNABLE.REQUEST);
-    yield call(loadAddLearnable, email, learnable, tags);
-    yield call(loadLearnables, email);
+    const { learnable, tags } = yield take(actions.ADD_LEARNABLE.REQUEST);
+    yield call(loadAddLearnable, learnable, tags);
+    yield call(loadLearnables);
   }
 }
 
 // Deletes a learnable for a User
 function* watchdeleteLearnable() {
   while (true) {
-    const { learnableid, email } = yield take(actions.DELETE_LEARNABLE.REQUEST);
+    const { learnableid } = yield take(actions.DELETE_LEARNABLE.REQUEST);
     yield call(loadDeleteLearnable, learnableid);
-    yield call(loadLearnables, email);
+    yield call(loadLearnables);
   }
 }
 
@@ -147,10 +129,10 @@ export default function* root(getState) {
 
   yield fork(watchNavigate);
   yield fork(watchFailureLogin);
-  yield fork(watchLoadUserPage, getLearnables);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);
-  yield fork(watchCheckAuthRequest, getLearnables);
+  yield fork(watchCheckAuthRequest);
+  yield fork(watchCheckAuthSuccess, getLearnables);
 }
 
 // https://github.com/yelouafi/redux-saga/issues/14

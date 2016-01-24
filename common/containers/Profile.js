@@ -72,8 +72,8 @@ Profile.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    tags: state.entities.tags[0] === undefined ? ['General'] : state.entities.tags,
-    learnables: state.entities.learnables[0] === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
+    tags: state.entities.tags === undefined ? ['General'] : state.entities.tags,
+    learnables: state.entities.learnables === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
     email: state.login.email,
   };
 }

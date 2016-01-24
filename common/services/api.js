@@ -1,8 +1,8 @@
 import 'isomorphic-fetch';
 import axios from 'axios';
 
-function fetchLearnablesAsync(email) {
-  return axios('/api/learnable/' + email)
+function fetchLearnablesAsync() {
+  return axios('/api/learnable/')
     .then(function (response) {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
@@ -15,28 +15,12 @@ function fetchLearnablesAsync(email) {
     );
 }
 
-function loginUserAsync(email) {
-  return axios('/api/student/' + email)
-    .then(function (response) {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return response;
-    })
-    .then(
-      confirmation => ({ confirmation }),
-      error => ({ error: error.message || 'Something shitty happened' })
-    );
-}
-
 function checkAuthAsync() {
-  console.log('got here');
   return axios('/auth/checkAuth/')
     .then(function (response) {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
-      console.log(response);
       return response;
     })
     .then(
@@ -45,11 +29,10 @@ function checkAuthAsync() {
     );
 }
 
-function addLearnableAsync(email, learnable, tags) {
+function addLearnableAsync(learnable, tags) {
   return axios.post('/api/learnable/', {
     text: learnable,
     tags,
-    email,
   })
   .then(function (response) {
     if (response.status >= 400) {
@@ -78,8 +61,7 @@ function deleteLearnableAsync(learnableid) {
 }
 
 // api services
-export const fetchLearnables = email => fetchLearnablesAsync(email);
-export const loginUser = email => loginUserAsync(email);
-export const addLearnable = (learnable, tags, email) => addLearnableAsync(learnable, tags, email);
+export const fetchLearnables = () => fetchLearnablesAsync();
+export const addLearnable = (learnable, tags) => addLearnableAsync(learnable, tags);
 export const deleteLearnable = learnableid => deleteLearnableAsync(learnableid);
 export const checkAuth = () => checkAuthAsync();

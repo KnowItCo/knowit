@@ -3,26 +3,17 @@ import { connect } from 'react-redux';
 import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from '../components/LandingPage';
-import Entry from '../components/Entry';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-
-    this.onLoginClick = this.onLoginClick.bind(this);
   }
 
   componentWillMount() {
     const { dispatch } = this.props;
     const action = ActionCreators.checkAuthUser.request();
-    dispatch(action);
-  }
-
-  onLoginClick(email) {
-    const { dispatch } = this.props;
-    const action = ActionCreators.loginUser.request(email);
     dispatch(action);
   }
 
@@ -35,9 +26,6 @@ export default class App extends Component {
         {!this.props.isLoggedIn &&
           <div>
             <LandingPage />
-            <Entry
-              onLoginClick={this.onLoginClick}
-            />
           </div>}
           {this.props.isLoggedIn && this.props.children}
       </div>

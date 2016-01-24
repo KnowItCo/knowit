@@ -7,6 +7,6 @@ import Entry from './common/components/Entry';
 export default (
   <Route path="/" component={App}>
     <Route path="entry" component={Entry} />
-    <Route path="profile/:email" component={Profile} />
+    <Route path="profile" component={Profile} />
   </Route>
 );

@@ -13,7 +13,6 @@ function createRequestType(base) {
   return res;
 }
 
-export const LOGIN = createRequestType('LOGIN');
 export const GET_LEARNABLES = createRequestType('GET_LEARNABLES');
 export const ADD_LEARNABLE = createRequestType('ADD_LEARNABLE');
 export const LOAD_USER_PAGE = 'LOAD_USER_PAGE';
@@ -28,13 +27,6 @@ function action(type, payload = {}) {
   return merge({}, { type }, payload);
 }
 
-
-export const loginUser = {
-  request: (email) => action(LOGIN.REQUEST, { email }),
-  success: (email, confirmation) => action(LOGIN.SUCCESS, { email, confirmation }),
-  failure: (email, error) => action(LOGIN.FAILURE, { email, error }),
-};
-
 export const checkAuthUser = {
   request: () => action(AUTH_CHECK.REQUEST, { }),
   success: (confirmation) => action(AUTH_CHECK.SUCCESS, { confirmation }),
@@ -42,19 +34,19 @@ export const checkAuthUser = {
 };
 
 export const getLearnables = {
-  request: email => action(GET_LEARNABLES.REQUEST, { email }),
-  success: (email, response) => action(GET_LEARNABLES.SUCCESS, { email, response }),
-  failure: (email, error) => action(GET_LEARNABLES.FAILURE, { email, error }),
+  request: () => action(GET_LEARNABLES.REQUEST, { }),
+  success: (response) => action(GET_LEARNABLES.SUCCESS, { response }),
+  failure: (error) => action(GET_LEARNABLES.FAILURE, { error }),
 };
 
 export const addLearnable = {
-  request: (email, learnable, tags) => action(ADD_LEARNABLE.REQUEST, { email, learnable, tags }),
-  success: (email, confirmation) => action(ADD_LEARNABLE.SUCCESS, { email, confirmation }),
-  failure: (email, error) => action(ADD_LEARNABLE.FAILURE, { email, error }),
+  request: (learnable, tags) => action(ADD_LEARNABLE.REQUEST, { learnable, tags }),
+  success: (confirmation) => action(ADD_LEARNABLE.SUCCESS, { confirmation }),
+  failure: (error) => action(ADD_LEARNABLE.FAILURE, { error }),
 };
 
 export const deleteLearnable = {
-  request: (learnableid, email) => action(DELETE_LEARNABLE.REQUEST, { learnableid, email }),
+  request: (learnableid) => action(DELETE_LEARNABLE.REQUEST, { learnableid }),
   success: (learnableid, confirmation) => action(DELETE_LEARNABLE.SUCCESS, { learnableid, confirmation }),
   failure: (learnableid, error) => action(DELETE_LEARNABLE.FAILURE, { learnableid, error }),
 };

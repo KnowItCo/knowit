@@ -6,42 +6,18 @@ import { combineReducers } from 'redux';
 // Updates an entity cache in response to any action with response.entities
 // TODO: use with normalizr
 
-// function login(state = { email: null, isLoggingIn: false, isLoggedIn: false, error: null }, action) {
-//   switch (action.type) {
-//     case ActionTypes.LOGIN.REQUEST:
-//       return merge({}, state, {
-//         isLoggingIn: true,
-//         isLoggedIn: false,
-//         email: action.email,
-//       });
-//     case ActionTypes.LOGIN.SUCCESS:
-//       return merge({}, state, {
-//         error: null,
-//         isLoggingIn: false,
-//         isLoggedIn: true,
-//         email: action.email,
-//       });
-//     case ActionTypes.LOGIN.FAILURE:
-//       return merge({}, state, {
-//         error: action.error,
-//         isLoggingIn: false,
-//         isLoggedIn: false,
-//         email: null,
-//       });
-//     default:
-//       return state;
-//   }
-// }
-function login(state = { isLoggedIn: false, error: null }, action) {
+function login(state = { isLoggedIn: false, error: null, email: null }, action) {
   switch (action.type) {
     case ActionTypes.AUTH_CHECK.REQUEST:
       return merge({}, state, {
         isLoggedIn: false,
+        email: null,
       });
     case ActionTypes.AUTH_CHECK.SUCCESS:
       return merge({}, state, {
         error: null,
         isLoggedIn: true,
+        email: action.confirmation.data.email,
       });
     case ActionTypes.AUTH_CHECK.FAILURE:
       return merge({}, state, {
@@ -54,12 +30,11 @@ function login(state = { isLoggedIn: false, error: null }, action) {
 }
 
 
-function addLearnable(state = { email: null, learnableBeingAdded: false, learnableAdded: false, error: null }, action) {
+function addLearnable(state = { learnableBeingAdded: false, learnableAdded: false, error: null }, action) {
   switch (action.type) {
     case ActionTypes.ADD_LEARNABLE.REQUEST:
       return merge({}, state, {
         learnableBeingAdded: true,
-        email: action.email,
         learnable: action.learnable,
         tags: action.tags,
       });
@@ -104,11 +79,11 @@ function deleteLearnable(state = { learnableBeingDeleted: false, learnableDelete
   }
 }
 
-function fetchLearnables(state = { email: null, learnables: [], fetchingLearnables: false, fetchedLearnables: false, error: null }, action) {
+function fetchLearnables(state = { learnables: [], fetchingLearnables: false, fetchedLearnables: false, error: null }, action) {
+  console.log(action);
   switch (action.type) {
     case ActionTypes.GET_LEARNABLES.REQUEST:
       return merge({}, state, {
-        email: action.email,
         fetchingLearnables: true,
         fetchedLearnables: false,
       });

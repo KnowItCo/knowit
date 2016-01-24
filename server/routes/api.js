@@ -14,12 +14,12 @@ module.exports = function (app) {
             res.send('success!');
         })
         .catch(error => {
-            console.log('ERROR: ', error);
+            throw new Error('Could not add user into database. ' + error);
         });
   });
 
   app.post('/learnable', function (req, res) {
-    const email = req.body.email;
+    const email = req.user[0].email;
     const tags = req.body.tags;
 
     const learnable = {
@@ -42,12 +42,12 @@ module.exports = function (app) {
         res.send('Success!');
       })
       .catch(error => {
-        console.log('ERROR: ', error);
+        throw new Error('Could not add new learnable into database. ' + error);
       });
   });
 
-  app.get('/learnable/:email', function (req, res) {
-    const email = req.params.email;
+  app.get('/learnable', function (req, res) {
+    const email = req.user[0].email;
     db.query(sqlFindStudentId, { email })
       .then(id => {
         if (!id) {
@@ -83,16 +83,6 @@ module.exports = function (app) {
     db.query('DELETE FROM knowit_schema.learnable WHERE id=${id}', { id })
       .then(() => {
         res.send('Successfully deleted!');
-      })
-      .catch(error => {
-        res.sendStatus(501, error);
-      });
-  });
-
-  app.get('/learnable', function (req, res) {
-    db.query('SELECT * from knowit_schema.learnable')
-      .then(learnables => {
-        res.json(learnables);
       })
       .catch(error => {
         res.sendStatus(501, error);
