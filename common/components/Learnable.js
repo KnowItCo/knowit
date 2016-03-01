@@ -50,7 +50,7 @@ export default class Learnable extends Component {
     return (
       <div>
         <ListItem
-          leftAvatar={<Avatar src="../../images/logo.jpeg" />}
+          leftAvatar={<Avatar src="./../../static/images/logo.jpeg" />}
           rightIconButton={rightIconMenu}
           primaryText={this.props.tags[0]}
           secondaryText={

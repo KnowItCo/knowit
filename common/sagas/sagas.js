@@ -110,7 +110,7 @@ function* watchdeleteLearnable() {
 // Watches for failed login, Redirect to landing page
 function* watchFailureLogin() {
   while (true) {
-    const { username, error } = yield take(actions.LOGIN.FAILURE);
+    const { username, error } = yield take(actions.AUTH_CHECK.FAILURE);
     yield put(actions.navigate('/'));
     yield history.push('/');
   }
