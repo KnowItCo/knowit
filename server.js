@@ -61,11 +61,7 @@ require('./server/routes/auth')(authRoute);
 app.use('/api', apiRoute);
 require('./server/routes/api')(apiRoute);
 
-app.use(express.static(path.join(__dirname, 'build')));
-
-app.get('/profile/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/index.html'));
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
 // default catch all
 app.use('*', function(req, res) {

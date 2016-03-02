@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class LandingPage extends Component {
   constructor(props) {
@@ -18,7 +19,12 @@ export default class LandingPage extends Component {
             Know everything
           </h1>
           <ul>
-            <a href="/auth/facebook" className="btn btn-info" role="button">Login with Facebook</a>
+            <RaisedButton
+              label="Login with Facebook"
+              linkButton
+              href="/auth/facebook"
+              hoverColor="#FE4A49"
+            />
           </ul>
         </div>
       </div>

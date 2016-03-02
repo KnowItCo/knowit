@@ -19,13 +19,13 @@ export default class Profile extends Component {
 
   addNewLearnable(learnable, tags) {
     const { dispatch } = this.props;
-    const action = ActionCreators.addLearnable.request(this.props.email, learnable, tags);
+    const action = ActionCreators.addLearnable.request(learnable, tags);
     dispatch(action);
   }
 
   deleteLearnable(learnableid) {
     const { dispatch } = this.props;
-    const action = ActionCreators.deleteLearnable.request(learnableid, this.props.email);
+    const action = ActionCreators.deleteLearnable.request(learnableid);
     dispatch(action);
   }
 
@@ -37,6 +37,10 @@ export default class Profile extends Component {
   // }
 
   render() {
+    const mainStyle = {
+      fontFamily: 'Roboto',
+      paddingTop: 70,
+    };
     return (
       <div className="main-container">
         <div className="col-md-4 col-xs-6">
@@ -44,7 +48,7 @@ export default class Profile extends Component {
             tags={this.props.tags}
           />
         </div>
-        <div className="col-md-8 col-xs-12" style={{ paddingTop: 70 }}>
+        <div className="col-md-8 col-xs-12" style={mainStyle}>
           <Input
             tags={this.props.tags}
             addNewLearnable={this.addNewLearnable}

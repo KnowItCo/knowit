@@ -83,7 +83,7 @@ function* watchCheckAuthSuccess() {
   while (true) {
     const { confirmation } = yield take(actions.AUTH_CHECK.SUCCESS);
     yield call(loadLearnables); // TODO
-    yield put(actions.navigate('/profile'));
+    yield put(actions.updateRouterState('/profile'));
     yield history.push('/profile');
   }
 }
@@ -111,23 +111,23 @@ function* watchdeleteLearnable() {
 function* watchFailureLogin() {
   while (true) {
     const { username, error } = yield take(actions.AUTH_CHECK.FAILURE);
-    yield put(actions.navigate('/'));
+    yield put(actions.updateRouterState('/'));
     yield history.push('/');
   }
 }
 
 // Trigger router navigation via history
-function* watchNavigate() {
-  while (true) {
-    const { pathname } = yield take(actions.NAVIGATE);
-    yield history.push(pathname);
-  }
-}
+// function* watchNavigate() {
+//   while (true) {
+//     const { pathname } = yield take(actions.UPDATE_ROUTER_STATE);
+//     yield history.pushState(pathname);
+//   }
+// }
 
 export default function* root(getState) {
   const getLearnables = getState().entities.learnables;
 
-  yield fork(watchNavigate);
+  // yield fork(watchNavigate);
   yield fork(watchFailureLogin);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);

@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   entry: './index',
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, 'public', 'build'),
     filename: 'bundle.js'
   },
   plugins: [

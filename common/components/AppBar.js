@@ -6,7 +6,7 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
 const style = {
-  backgroundColor: '#2B3031',
+  backgroundColor: '#2B2D42',
   position: 'fixed',
 };
 

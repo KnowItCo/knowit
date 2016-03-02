@@ -80,7 +80,6 @@ function deleteLearnable(state = { learnableBeingDeleted: false, learnableDelete
 }
 
 function fetchLearnables(state = { learnables: [], fetchingLearnables: false, fetchedLearnables: false, error: null }, action) {
-  console.log(action);
   switch (action.type) {
     case ActionTypes.GET_LEARNABLES.REQUEST:
       return merge({}, state, {

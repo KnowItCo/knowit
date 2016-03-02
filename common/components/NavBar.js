@@ -21,12 +21,12 @@ export default class LeftNavBar extends Component {
 
   render() {
     const style = {
+      fontFamily: 'Roboto',
       top: 0,
-      zIndex: -1,
+      zIndex: -0.0000000000000005,
       paddingTop: '80',
       width: 200,
       height: '100%',
-      backgroundColor: 'grey',
       position: 'fixed',
       docked: true,
     };
