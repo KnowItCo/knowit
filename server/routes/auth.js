@@ -27,7 +27,7 @@ module.exports = function(app) {
   // which, will redirect the user to the profile page.
   app.get('/facebook/callback',
     passport.authenticate('facebook', { failureRedirect: '/' }), function (req, res) {
-      res.redirect('/profile');
+      res.redirect('/');
     });
 
   app.get('/logout', function(req, res){

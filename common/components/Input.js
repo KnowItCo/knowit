@@ -53,6 +53,7 @@ export default class Input extends Component {
           <RaisedButton
             onClick={this.handleAddNewLearnable}
             label="Add Learnable"
+            hoverColor="#FE4A49"
           />
         </div>
       </div>

@@ -39,7 +39,7 @@ app.use(session({
   secret: secrets.SESSION_SECRET,
   resave: true,
   saveUninitialized: false,
-  cookie: { httpOnly: true, maxAge: 2419200000 },
+  cookie: { httpOnly: true, maxAge: 24192000 },
   store: new RedisStore(redisOptions),
 }));
 

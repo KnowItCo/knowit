@@ -1,9 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
+import { connect } from 'react-redux';
 
 export default class LandingPage extends Component {
   constructor(props) {
     super(props);
+    this.handleMouseUp = this.handleMouseUp.bind(this);
+  }
+
+  handleMouseUp() {
+    if (this.props.isLoggedIn) {
+      this.context.router.push('/');
+    }
   }
 
   render() {
@@ -22,6 +30,7 @@ export default class LandingPage extends Component {
             <RaisedButton
               label="Login with Facebook"
               linkButton
+              onClick={this.handleMouseUp}
               href="/auth/facebook"
               hoverColor="#FE4A49"
             />
@@ -33,6 +42,13 @@ export default class LandingPage extends Component {
 }
 
 LandingPage.propTypes = {
-  onLoginClick: PropTypes.func,
-  onFacebookLoginClick: PropTypes.func,
+  isLoggedIn: PropTypes.bool,
 };
+
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.login.isLoggedIn,
+  };
+}
+
+export default connect(mapStateToProps)(LandingPage);
