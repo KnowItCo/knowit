@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as ActionCreators from '../actions/actions';
-import LearnableList from '../components/LearnableList';
+// import LearnableList from '../components/LearnableList';
+import LearnableList2 from '../components/LearnableList2';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
 
@@ -53,10 +54,9 @@ export default class Profile extends Component {
             tags={this.props.tags}
             addNewLearnable={this.addNewLearnable}
           />
-        <LearnableList
-          learnables={this.props.learnables}
-          deleteLearnable={this.deleteLearnable}
-        />
+          <LearnableList2
+            learnables={this.props.learnables}
+          />
         </div>
       </div>
     );
@@ -83,3 +83,8 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Profile);
+
+// <LearnableList
+//   learnables={this.props.learnables}
+//   deleteLearnable={this.deleteLearnable}
+// />
