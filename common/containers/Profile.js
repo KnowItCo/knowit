@@ -42,6 +42,9 @@ export default class Profile extends Component {
       fontFamily: 'Roboto',
       paddingTop: 70,
     };
+    const inputStyle = {
+      marginBottom: 25,
+    };
     return (
       <div className="main-container">
         <div className="col-md-4 col-xs-6">
@@ -50,10 +53,13 @@ export default class Profile extends Component {
           />
         </div>
         <div className="col-md-8 col-xs-12" style={mainStyle}>
-          <Input
-            tags={this.props.tags}
-            addNewLearnable={this.addNewLearnable}
-          />
+          <div style={inputStyle}>
+            <Input
+              tags={this.props.tags}
+              addNewLearnable={this.addNewLearnable}
+            />
+          </div>
+
           <LearnableList2
             learnables={this.props.learnables}
           />
