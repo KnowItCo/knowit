@@ -36,7 +36,7 @@ export default class Generate extends Component {
 
   render() {
     const mainDivStyle = {
-      paddingTop: 70,
+      paddingTop: 50,
       position: 'absolute',
       margin: 'auto',
       top: 0,
@@ -48,6 +48,8 @@ export default class Generate extends Component {
     };
     const questionsDivStyle = {
       paddingTop: 30,
+      wordBreak: 'break-all',
+      whiteSpace: 'normal',
     };
 
     return (

@@ -16,10 +16,6 @@ export default class Profile extends Component {
     this.knowItLearnable = this.knowItLearnable.bind(this);
   }
 
-  componentWillMount() {
-
-  }
-
   addNewLearnable(learnable, tags) {
     const { dispatch } = this.props;
     const action = ActionCreators.addLearnable.request(learnable, tags);
@@ -39,13 +35,6 @@ export default class Profile extends Component {
     history.pushState(null, `/generate/:${learnableid}`);
   }
 
-  // componentWillMount() {
-  //   this.props.updateRouterState({
-  //     pathname: this.props.location.pathname,
-  //     params: this.props.params,
-  //   });
-  // }
-
   render() {
     const mainStyle = {
       fontFamily: 'Roboto',
@@ -56,24 +45,25 @@ export default class Profile extends Component {
     };
     return (
       <div className="main-container">
-        <div className="col-md-4 col-xs-6">
-          <LeftNavBar
-            tags={this.props.tags}
-          />
-        </div>
-        <div className="col-md-8 col-xs-12" style={mainStyle}>
-          <div style={inputStyle}>
-            <Input
+        <div className="row">
+          <div className="col-xs-6 col-md-4">
+            <LeftNavBar
               tags={this.props.tags}
-              addNewLearnable={this.addNewLearnable}
             />
           </div>
-
-          <LearnableList
-            learnables={this.props.learnables}
-            deleteLearnable={this.deleteLearnable}
-            knowItLearnable={this.knowItLearnable}
-          />
+          <div className="col-xs-12 col-sm-6 col-md-8" style={mainStyle}>
+            <div style={inputStyle}>
+              <Input
+                tags={this.props.tags}
+                addNewLearnable={this.addNewLearnable}
+              />
+            </div>
+            <LearnableList
+              learnables={this.props.learnables}
+              deleteLearnable={this.deleteLearnable}
+              knowItLearnable={this.knowItLearnable}
+            />
+          </div>
         </div>
       </div>
     );
@@ -84,8 +74,8 @@ Profile.propTypes = {
   updateRouterState: PropTypes.func,
   location: PropTypes.object,
   params: PropTypes.object,
-  learnables: PropTypes.array,
-  tags: PropTypes.array,
+  learnables: PropTypes.array.isRequired,
+  tags: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
 };

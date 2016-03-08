@@ -12,10 +12,19 @@ export default class QuestionTable extends Component {
   }
 
   render() {
+    const tableRowStyle = {
+      wordWrap: 'break-word',
+      whiteSpace: 'normal',
+      fontFamily: 'Roboto',
+      height: 60,
+      paddingTop: 3,
+      paddingBottom: 3,
+      paddingRight: 5,
+    };
     const { questions } = this.props;
     const questionsList = questions.map((question) => {
       if (question.answer && question.score > 0) {
-        return <TableRow><TableRowColumn>{question.question}</TableRowColumn><TableRowColumn>{question.answer}</TableRowColumn></TableRow>;
+        return <TableRow style={tableRowStyle}><TableRowColumn style={tableRowStyle}>{question.question}</TableRowColumn><TableRowColumn style={tableRowStyle}>{question.answer}</TableRowColumn></TableRow>;
       }
     });
 

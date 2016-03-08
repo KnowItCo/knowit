@@ -12,7 +12,11 @@ export default class LeftNavBar extends Component {
   }
 
   componentWillMount() {
-    this.setState({ open: true });
+    if (window.innerWidth < 770) {
+      this.setState({ open: false });
+    } else {
+      this.setState({ open: true });
+    }
   }
 
   handleToggle() {
@@ -24,11 +28,13 @@ export default class LeftNavBar extends Component {
       fontFamily: 'Roboto',
       top: 0,
       zIndex: -0.0000000000000005,
-      paddingTop: '80',
-      width: 200,
+      paddingTop: 80,
+      width: '15%',
       height: '100%',
       position: 'fixed',
       docked: true,
+      overflow: 'auto',
+      boxSizing: 'border-box',
     };
 
     const menuItems = this.props.tags.map(function (tag) {
