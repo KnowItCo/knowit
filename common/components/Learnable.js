@@ -21,7 +21,7 @@ export default class Learnable extends Component {
   }
 
   handleKnowIt() {
-    // TODO
+    this.props.handleKnowItLearnable(this.props.learnableid);
   }
 
   handleDelete() {
@@ -41,7 +41,7 @@ export default class Learnable extends Component {
 
     const rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem>Know it!</MenuItem>
+        <MenuItem onClick={this.handleKnowIt}>Know it!</MenuItem>
         <MenuItem>Edit</MenuItem>
         <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
       </IconMenu>
@@ -70,5 +70,6 @@ Learnable.propTypes = {
   text: PropTypes.string.isRequired,
   tags: PropTypes.array.isRequired,
   handleDeleteLearnable: PropTypes.func.isRequired,
+  handleKnowItLearnable: PropTypes.func.isRequired,
   learnableid: PropTypes.number.isRequired,
 };

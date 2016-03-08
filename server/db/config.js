@@ -10,7 +10,7 @@ var cn = {
     port: 5432, // 5432 is the default;
     database: 'knowit',
     user: 'peekay',
-    password: ''
+    password: 'knowit123'
 };
 
 var db = pgp(cn);

@@ -50,7 +50,7 @@ passport.use(new FacebookStrategy({
           return done(null, user);
         })
         .catch(function(error) {
-            throw new Error('Welp, we had an error processing you.' + error);
+            throw new Error('Welp, we had an error processing you. ' + error);
         });
 
     });

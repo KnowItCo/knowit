@@ -52,4 +52,4 @@ export const deleteLearnable = {
 };
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });
-export const loadUserPage = username => action(LOAD_USER_PAGE, { username });
+// export const loadUserPage = username => action(LOAD_USER_PAGE, { username });

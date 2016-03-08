@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import AppBarTop from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
-import LandingPage from '../components/LandingPage';
+import LandingPage from './LandingPage';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
@@ -37,7 +37,6 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.node,
   isLoggedIn: PropTypes.bool,
-  location: PropTypes.object,
   updateRouterState: PropTypes.func,
 };
 

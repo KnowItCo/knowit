@@ -6,7 +6,6 @@ import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
 const { getLearnables, addLearnable, deleteLearnable, checkAuthUser } = actions;
-// const { learnable } = actions;
 
 /* Subroutines */
 
@@ -84,7 +83,7 @@ function* watchCheckAuthSuccess() {
     const { confirmation } = yield take(actions.AUTH_CHECK.SUCCESS);
     yield call(loadLearnables); // TODO
     yield put(actions.updateRouterState('/profile'));
-    yield history.push('/profile');
+    yield history.pushState(null, '/profile');
   }
 }
 
@@ -112,7 +111,7 @@ function* watchFailureLogin() {
   while (true) {
     const { username, error } = yield take(actions.AUTH_CHECK.FAILURE);
     yield put(actions.updateRouterState('/'));
-    yield history.push('/');
+    yield history.pushState(null, '/');
   }
 }
 
@@ -120,18 +119,19 @@ function* watchFailureLogin() {
 // function* watchNavigate() {
 //   while (true) {
 //     const { pathname } = yield take(actions.UPDATE_ROUTER_STATE);
-//     yield history.pushState(pathname);
+//     console.log(pathname, 'from sagas')
+//     yield history.pushState(null, pathname);
 //   }
 // }
 
 export default function* root(getState) {
   const getLearnables = getState().entities.learnables;
 
-  // yield fork(watchNavigate);
   yield fork(watchFailureLogin);
+  // yield fork(watchNavigate);
+  yield fork(watchCheckAuthRequest);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);
-  yield fork(watchCheckAuthRequest);
   yield fork(watchCheckAuthSuccess, getLearnables);
 }
 

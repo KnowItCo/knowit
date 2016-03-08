@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+// import { browserHistory } from 'react-router';
+import { history } from '../services';
 import * as ActionCreators from '../actions/actions';
-// import LearnableList from '../components/LearnableList';
-import LearnableList2 from '../components/LearnableList2';
+import LearnableList from '../components/LearnableList';
+// import LearnableList2 from '../components/LearnableList2';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
 
@@ -12,6 +14,7 @@ export default class Profile extends Component {
 
     this.addNewLearnable = this.addNewLearnable.bind(this);
     this.deleteLearnable = this.deleteLearnable.bind(this);
+    this.knowItLearnable = this.knowItLearnable.bind(this);
   }
 
   componentWillMount() {
@@ -28,6 +31,13 @@ export default class Profile extends Component {
     const { dispatch } = this.props;
     const action = ActionCreators.deleteLearnable.request(learnableid);
     dispatch(action);
+  }
+
+  knowItLearnable(learnableid) {
+    const { dispatch } = this.props;
+    const action = ActionCreators.updateRouterState(`/generate/:${learnableid}`);
+    dispatch(action);
+    history.pushState(null, `/generate/:${learnableid}`);
   }
 
   // componentWillMount() {
@@ -60,8 +70,10 @@ export default class Profile extends Component {
             />
           </div>
 
-          <LearnableList2
+          <LearnableList
             learnables={this.props.learnables}
+            deleteLearnable={this.deleteLearnable}
+            knowItLearnable={this.knowItLearnable}
           />
         </div>
       </div>
