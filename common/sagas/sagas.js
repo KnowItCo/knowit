@@ -5,7 +5,7 @@ import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { getLearnables, addLearnable, deleteLearnable, checkAuthUser } = actions;
+const { getLearnables, addLearnable, deleteLearnable, checkAuthUser, generateQ } = actions;
 
 /* Subroutines */
 
@@ -48,10 +48,20 @@ function* deleteLearnableSaga(entity, apiCall, learnableid) {
   }
 }
 
+function* generateQSaga(entity, apiCall, learnableid, learnableText) {
+  const { confirmation, error } = yield call(apiCall, learnableid, learnableText);
+  if (!error) {
+    yield put(entity.success(confirmation));
+  } else {
+    yield put(entity.failure(error));
+  }
+}
+
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
 const checkAuthAsync = checkAuthSaga.bind(null, checkAuthUser, api.checkAuth);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
 const deleteLearnableAsync = deleteLearnableSaga.bind(null, deleteLearnable, api.deleteLearnable);
+const generateQAsync = generateQSaga.bind(null, generateQ, api.generateQ);
 
 function* loadLearnables() {
   yield call(fetchLearnables);
@@ -67,6 +77,10 @@ function* loadAddLearnable(learnable, tags) {
 
 function* loadDeleteLearnable(learnableid) {
   yield call(deleteLearnableAsync, learnableid);
+}
+
+function* loadGenerateQ(learnableid, learnableText) {
+  yield call(generateQAsync, learnableid, learnableText);
 }
 
 // Fetches login and learnables for a User
@@ -105,6 +119,13 @@ function* watchdeleteLearnable() {
   }
 }
 
+// Generate Qs off of a learnable
+function* watchGenerateQ() {
+  while (true) {
+    const { learnableid, learnableText } = yield take(actions.GENERATE_Q.REQUEST);
+    yield call(loadGenerateQ, learnableid, learnableText);
+  }
+}
 
 // Watches for failed login, Redirect to landing page
 function* watchFailureLogin() {
@@ -128,8 +149,8 @@ export default function* root(getState) {
   const getLearnables = getState().entities.learnables;
 
   yield fork(watchFailureLogin);
-  // yield fork(watchNavigate);
   yield fork(watchCheckAuthRequest);
+  yield fork(watchGenerateQ);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);
   yield fork(watchCheckAuthSuccess, getLearnables);

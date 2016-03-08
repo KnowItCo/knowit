@@ -103,6 +103,30 @@ function fetchLearnables(state = { learnables: [], fetchingLearnables: false, fe
   }
 }
 
+function generateQs(state = { questions: [], generatingQuestions: false, generatedQuestions: false, error: null }, action) {
+  switch (action.type) {
+    case ActionTypes.GENERATE_Q.REQUEST:
+      return merge({}, state, {
+        generatingQuestions: true,
+        generatedQuestions: false,
+      });
+    case ActionTypes.GENERATE_Q.SUCCESS:
+      return merge({}, state, {
+        generatingQuestions: false,
+        generatedQuestions: true,
+        questions: action.response.data,
+      });
+    case ActionTypes.GENERATE_Q.FAILURE:
+      return merge({}, state, {
+        generatingQuestions: false,
+        generatedQuestions: false,
+        error: action.error,
+      });
+    default:
+      return state;
+  }
+}
+
 function entities(state = { learnables: {}, tags: [] }, action) {
   if (action.response) {
     const tagsGrouped = groupByTags(action.response.data, 'tags');
@@ -126,6 +150,7 @@ const rootReducer = combineReducers({
   addLearnable,
   fetchLearnables,
   deleteLearnable,
+  generateQs,
   router,
   entities,
 });

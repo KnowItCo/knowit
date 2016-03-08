@@ -60,8 +60,23 @@ function deleteLearnableAsync(learnableid) {
   );
 }
 
+function generateQAsync(learnableid, learnableText) {
+  return axios(`http://knowit.co:8000/question?text=${learnableText}`)
+  .then(function (response) {
+    if (response.status >= 400) {
+      throw new Error('Bad response from server');
+    }
+    return response;
+  })
+  .then(
+    confirmation => ({ confirmation }),
+    error => ({ error: error.message || 'Error generating questions.' })
+  );
+}
+
 // api services
 export const fetchLearnables = () => fetchLearnablesAsync();
 export const addLearnable = (learnable, tags) => addLearnableAsync(learnable, tags);
 export const deleteLearnable = learnableid => deleteLearnableAsync(learnableid);
+export const generateQ = (learnableid, learnableText) => generateQAsync(learnableid, learnableText);
 export const checkAuth = () => checkAuthAsync();

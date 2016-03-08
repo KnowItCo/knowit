@@ -20,12 +20,19 @@ export const UPDATE_ROUTER_STATE = 'UPDATE_ROUTER_STATE';
 export const NAVIGATE = 'NAVIGATE';
 export const DELETE_LEARNABLE = createRequestType('DELETE_LEARNABLE');
 export const AUTH_CHECK = createRequestType('AUTH_CHECK');
+export const GENERATE_Q = createRequestType('GENERATE_Q');
 
 // Return action with payload. Payload defaults to empty object if
 // none passed in
 function action(type, payload = {}) {
   return merge({}, { type }, payload);
 }
+
+export const generateQ = {
+  request: (learnableid, learnableText) => action(GENERATE_Q.REQUEST, { learnableid, learnableText }),
+  success: (confirmation) => action(GENERATE_Q.SUCCESS, { confirmation }),
+  failure: (error) => action(GENERATE_Q.FAILURE, { error }),
+};
 
 export const checkAuthUser = {
   request: () => action(AUTH_CHECK.REQUEST, { }),
@@ -52,4 +59,3 @@ export const deleteLearnable = {
 };
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });
-// export const loadUserPage = username => action(LOAD_USER_PAGE, { username });
