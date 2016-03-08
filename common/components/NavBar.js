@@ -9,6 +9,7 @@ export default class LeftNavBar extends Component {
       open: false,
     };
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleTagClickNav = this.handleTagClickNav.bind(this);
   }
 
   componentWillMount() {
@@ -21,6 +22,10 @@ export default class LeftNavBar extends Component {
 
   handleToggle() {
     this.setState({ open: !this.state.open });
+  }
+
+  handleTagClickNav(tag) {
+    this.props.tagClick(tag);
   }
 
   render() {
@@ -38,8 +43,8 @@ export default class LeftNavBar extends Component {
     };
 
     const menuItems = this.props.tags.map(function (tag) {
-      return <TagItem tag={tag} />;
-    });
+      return <TagItem handleTagClickNav={this.handleTagClickNav} tag={tag} />;
+    }.bind(this));
 
     return (
       <div>
@@ -56,4 +61,5 @@ export default class LeftNavBar extends Component {
 
 LeftNavBar.propTypes = {
   tags: PropTypes.array,
+  tagClick: PropTypes.func,
 };

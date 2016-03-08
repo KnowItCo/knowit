@@ -14,6 +14,7 @@ export default class Profile extends Component {
     this.addNewLearnable = this.addNewLearnable.bind(this);
     this.deleteLearnable = this.deleteLearnable.bind(this);
     this.knowItLearnable = this.knowItLearnable.bind(this);
+    this.tagClick = this.tagClick.bind(this);
   }
 
   addNewLearnable(learnable, tags) {
@@ -35,6 +36,14 @@ export default class Profile extends Component {
     history.pushState(null, `/generate/:${learnableid}`);
   }
 
+  tagClick(tag) {
+    console.log(tag);
+    // TODO
+    // const { dispatch } = this.props;
+    // const action = ActionCreators.deleteLearnable.request(learnableid);
+    // dispatch(action);
+  }
+
   render() {
     const styles = {
       mainStyle: {
@@ -52,6 +61,7 @@ export default class Profile extends Component {
           <div className="col-xs-6 col-md-4">
             <LeftNavBar
               tags={this.props.tags}
+              tagClick={this.tagClick}
             />
           </div>
           <div className="col-xs-12 col-sm-6 col-md-8" style={styles.mainStyle}>
@@ -81,6 +91,7 @@ Profile.propTypes = {
   tags: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
+  tagClick: PropTypes.func,
 };
 
 

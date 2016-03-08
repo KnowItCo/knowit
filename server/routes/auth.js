@@ -1,7 +1,7 @@
 var passport = require('./../config/passport');
 var authMiddleware = require('./../config/authMiddleware');
 
-module.exports = (app) => {
+module.exports = function(app) {
   app.post('/login', (req, res) => {
     res.send('Hello');
   });
@@ -13,7 +13,7 @@ module.exports = (app) => {
   // facebook.com.  After authorization, Facebook will redirect
   // the user back to this application at /auth/facebook/callback
   app.get('/facebook',
-    passport.authenticate('facebook', { scope: 'email' }), (req, res) => {
+    passport.authenticate('facebook', { scope: 'email' }), function (req, res) {
       // The request will be redirected to Facebook for authentication, so this
       // function will not be called.
     });
@@ -25,16 +25,16 @@ module.exports = (app) => {
   // Otherwise, the primary route function function will be called,
   // which, will redirect the user to the profile page.
   app.get('/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/' }), (req, res) => {
+    passport.authenticate('facebook', { failureRedirect: '/' }), function (req, res) {
       res.redirect('/');
     });
 
-  app.get('/logout', (req, res) => {
+  app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
   });
 
-  app.get('/checkAuth', (req, res) => {
+  app.get('/checkAuth', function (req, res) {
     if (req.isAuthenticated()) {
       res.json({"message":"success", "email": req.user[0].email });
     } else {
