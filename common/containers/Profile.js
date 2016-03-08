@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-// import { browserHistory } from 'react-router';
 import { history } from '../services';
 import * as ActionCreators from '../actions/actions';
 import LearnableList from '../components/LearnableList';
@@ -101,8 +100,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(Profile);
-
-// <LearnableList
-//   learnables={this.props.learnables}
-//   deleteLearnable={this.deleteLearnable}
-// />
