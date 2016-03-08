@@ -104,6 +104,7 @@ function fetchLearnables(state = { learnables: [], fetchingLearnables: false, fe
 }
 
 function generateQs(state = { questions: [], generatingQuestions: false, generatedQuestions: false, error: null }, action) {
+  console.log(action, 'sdfjsdkjf');
   switch (action.type) {
     case ActionTypes.GENERATE_Q.REQUEST:
       return merge({}, state, {
@@ -114,7 +115,7 @@ function generateQs(state = { questions: [], generatingQuestions: false, generat
       return merge({}, state, {
         generatingQuestions: false,
         generatedQuestions: true,
-        questions: action.response.data,
+        questions: action.confirmation.data.data,
       });
     case ActionTypes.GENERATE_Q.FAILURE:
       return merge({}, state, {

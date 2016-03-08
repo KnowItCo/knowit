@@ -7,12 +7,7 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardTitle from 'material-ui/lib/card/card-title';
 import RaisedButton from 'material-ui/lib/raised-button';
 import CardText from 'material-ui/lib/card/card-text';
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
+import QuestionsTable from '../components/QuestionTable';
 
 export default class Generate extends Component {
   constructor(props) {
@@ -48,8 +43,8 @@ export default class Generate extends Component {
       right: 0,
       bottom: 0,
       left: 0,
-      width: 600,
-      height: 400,
+      width: '60%',
+      height: 440,
     };
     const questionsDivStyle = {
       paddingTop: 30,
@@ -71,28 +66,9 @@ export default class Generate extends Component {
         </Card>
         {this.props.questions &&
           <div style={questionsDivStyle}>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHeaderColumn>Question</TableHeaderColumn>
-                  <TableHeaderColumn>Answer</TableHeaderColumn>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableRowColumn>{this.props.questions[0].question}</TableRowColumn>
-                  <TableRowColumn>{this.props.questions[0].answer}</TableRowColumn>
-                </TableRow>
-                <TableRow>
-                  <TableRowColumn>{this.props.questions[1].question}</TableRowColumn>
-                  <TableRowColumn>{this.props.questions[1].answer} </TableRowColumn>
-                </TableRow>
-                <TableRow>
-                  <TableRowColumn>Fake</TableRowColumn>
-                  <TableRowColumn>Fake</TableRowColumn>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <QuestionsTable
+              questions={this.props.questions}
+            />
           </div>}
       </div>
     );
@@ -114,8 +90,7 @@ function mapStateToProps(state) {
   return {
     learnables: state.entities.learnables === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
     email: state.login.email,
-    questions: [{"simplefactualrepresentation":"Nick is cool","question":"What is cool?","answer":"Nick","score":"1.1353911710629263"},{"simplefactualrepresentation":"Nick is cool","question":"Is Nick cool?","score":"0.7274952917002897"}],
-    // questions: state.entities.questions === undefined ? false : state.entities.questions,
+    questions: state.generateQs.questions.length === 0 ? false : state.generateQs.questions,
   };
 }
 

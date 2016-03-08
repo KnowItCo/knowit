@@ -6,6 +6,7 @@ var sqlAddLearnable = require('./../db/queries').sqlAddLearnable;
 var sqlGetLearnablesById = require('./../db/queries').sqlGetLearnablesById;
 var sqlFindStudentById = require('./../db/queries').sqlFindStudentById;
 var sqlDeleteLearnableById = require('./../db/queries').sqlDeleteLearnableById;
+var axios = require('axios');
 
 module.exports = function (app) {
   app.post('/student', function (req, res) {
@@ -78,7 +79,7 @@ module.exports = function (app) {
       });
   });
 
-  app.delete('/learnable/:id', function(req, res) {
+  app.delete('/learnable/:id', function (req, res) {
     const id = req.params.id;
     db.query('DELETE FROM knowit_schema.learnable WHERE id=${id}', { id })
       .then(() => {
@@ -98,5 +99,17 @@ module.exports = function (app) {
         res.sendStatus(501, error);
       });
   });
+
+  app.post('/generate', function (req, res) {
+    const learnableText = req.body.learnableText;
+    axios(`http://knowit.co:8000/question?text=${learnableText}`)
+    .then((questions) => {
+      res.json(questions);
+    })
+    .catch(error => {
+      res.sendStatus(501, error);
+    });
+  });
+
 
 };

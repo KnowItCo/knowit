@@ -61,7 +61,7 @@ function deleteLearnableAsync(learnableid) {
 }
 
 function generateQAsync(learnableid, learnableText) {
-  return axios(`http://knowit.co:8000/question?text=${learnableText}`)
+  return axios.post('/api/generate', { learnableText, learnableid })
   .then(function (response) {
     if (response.status >= 400) {
       throw new Error('Bad response from server');
