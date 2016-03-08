@@ -3,7 +3,7 @@ import axios from 'axios';
 
 function fetchLearnablesAsync() {
   return axios('/api/learnable/')
-    .then(function (response) {
+    .then((response) => {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
@@ -17,7 +17,7 @@ function fetchLearnablesAsync() {
 
 function checkAuthAsync() {
   return axios('/auth/checkAuth/')
-    .then(function (response) {
+    .then((response) => {
       if (response.status >= 400) {
         throw new Error('Bad response from server');
       }
@@ -34,7 +34,7 @@ function addLearnableAsync(learnable, tags) {
     text: learnable,
     tags,
   })
-  .then(function (response) {
+  .then((response) => {
     if (response.status >= 400) {
       throw new Error('Bad response from server');
     }
@@ -48,7 +48,7 @@ function addLearnableAsync(learnable, tags) {
 
 function deleteLearnableAsync(learnableid) {
   return axios.delete('/api/learnable/' + learnableid)
-  .then(function (response) {
+  .then((response) => {
     if (response.status >= 400) {
       throw new Error('Bad response from server');
     }
@@ -62,7 +62,7 @@ function deleteLearnableAsync(learnableid) {
 
 function generateQAsync(learnableid, learnableText) {
   return axios.post('/api/generate', { learnableText, learnableid })
-  .then(function (response) {
+  .then((response) => {
     if (response.status >= 400) {
       throw new Error('Bad response from server');
     }

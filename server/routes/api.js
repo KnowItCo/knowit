@@ -8,8 +8,8 @@ var sqlFindStudentById = require('./../db/queries').sqlFindStudentById;
 var sqlDeleteLearnableById = require('./../db/queries').sqlDeleteLearnableById;
 var axios = require('axios');
 
-module.exports = function (app) {
-  app.post('/student', function (req, res) {
+module.exports = (app) => {
+  app.post('/student', (req, res) => {
     db.query(sqlAddUser, { firstname: 'Fake', lastname: 'Name', email: 'lalala@gmail.com'})
         .then(() => {
             res.send('success!');
@@ -19,7 +19,7 @@ module.exports = function (app) {
         });
   });
 
-  app.post('/learnable', function (req, res) {
+  app.post('/learnable', (req, res) => {
     const email = req.user[0].email;
     const tags = req.body.tags;
 
@@ -47,7 +47,7 @@ module.exports = function (app) {
       });
   });
 
-  app.get('/learnable', function (req, res) {
+  app.get('/learnable', (req, res) => {
     const email = req.user[0].email;
     db.query(sqlFindStudentId, { email })
       .then(id => {
@@ -68,7 +68,7 @@ module.exports = function (app) {
       });
   });
 
-  app.get('/student/:email', function (req, res) {
+  app.get('/student/:email', (req, res) => {
     const email = req.params.email;
     db.query('SELECT * from knowit_schema.student WHERE email=${email}', { email })
       .then(student => {
@@ -79,7 +79,7 @@ module.exports = function (app) {
       });
   });
 
-  app.delete('/learnable/:id', function (req, res) {
+  app.delete('/learnable/:id', (req, res) => {
     const id = req.params.id;
     db.query('DELETE FROM knowit_schema.learnable WHERE id=${id}', { id })
       .then(() => {
@@ -90,7 +90,7 @@ module.exports = function (app) {
       });
   });
 
-  app.get('/student', function (req, res) {
+  app.get('/student', (req, res) => {
     db.query('SELECT * from knowit_schema.student')
       .then(students => {
         res.json(students);
@@ -100,7 +100,7 @@ module.exports = function (app) {
       });
   });
 
-  app.post('/generate', function (req, res) {
+  app.post('/generate', (req, res) => {
     const learnableText = req.body.learnableText;
     axios(`http://knowit.co:8000/question?text=${learnableText}`)
     .then((questions) => {
@@ -110,6 +110,4 @@ module.exports = function (app) {
       res.sendStatus(501, error);
     });
   });
-
-
 };

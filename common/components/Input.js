@@ -24,7 +24,7 @@ export default class Input extends Component {
         width: 550,
         position: 'relative',
       },
-      tagFieldStyle = {
+      tagFieldStyle: {
         width: 180,
         position: 'relative',
       },

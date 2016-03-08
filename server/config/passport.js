@@ -12,12 +12,12 @@ var sqlFindUser = require('./../db/queries').sqlFindUser;
 // the session. Typically, this will be as simple as storing
 // the user ID when serializing, and finding the user by ID
 //  when deserializing.
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done) => {
   console.log('serializing user: ' + user);
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser((obj, done) => {
   done(null, obj);
 });
 
@@ -35,9 +35,9 @@ passport.use(new FacebookStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
-    process.nextTick(function () {
+    process.nextTick(() => {
       return db.query(sqlFindUser, { email: profile.emails[0].value })
-        .then(function(user) {
+        .then((user) => {
           if (user[0] !== undefined) {
             return user;
           } else {
@@ -46,10 +46,10 @@ passport.use(new FacebookStrategy({
             return db.query(sqlFindUser, { email: profile.emails[0].value });
           }
         })
-        .then(function(user) {
+        .then((user) => {
           return done(null, user);
         })
-        .catch(function(error) {
+        .catch((error) => {
             throw new Error('Welp, we had an error processing you. ' + error);
         });
 

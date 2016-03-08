@@ -63,12 +63,12 @@ function deleteLearnable(state = { learnableBeingDeleted: false, learnableDelete
         learnableBeingDeleted: true,
         learnableDeleted: false,
       });
-    case ActionTypes.ADD_LEARNABLE.SUCCESS:
+    case ActionTypes.DELETE_LEARNABLE.SUCCESS:
       return merge({}, state, {
         learnableBeingDeleted: false,
         learnableDeleted: true,
       });
-    case ActionTypes.ADD_LEARNABLE.FAILURE:
+    case ActionTypes.DELETE_LEARNABLE.FAILURE:
       return merge({}, state, {
         learnableBeingDeleted: false,
         learnableDeleted: false,
