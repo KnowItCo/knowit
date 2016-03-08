@@ -11,13 +11,8 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 export default class Learnable extends Component {
   constructor(props) {
     super(props);
-    this.handleEdit = this.handleEdit.bind(this);
     this.handleKnowIt = this.handleKnowIt.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  handleEdit() {
-    // TODO
   }
 
   handleKnowIt() {
@@ -42,7 +37,6 @@ export default class Learnable extends Component {
     const rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
         <MenuItem onClick={this.handleKnowIt}>Know it!</MenuItem>
-        <MenuItem>Edit</MenuItem>
         <MenuItem onClick={this.handleDelete}>Delete</MenuItem>
       </IconMenu>
     );

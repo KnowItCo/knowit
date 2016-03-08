@@ -5,7 +5,7 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
-const style = {
+const styles = {
   backgroundColor: '#2B2D42',
   position: 'fixed',
 };
@@ -13,7 +13,7 @@ const style = {
 const AppBarTop = () => (
   <AppBar
     title="Know It"
-    style={style}
+    style={styles}
     iconElementRight={
       <IconMenu
         iconButtonElement={

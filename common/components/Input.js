@@ -1,18 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
-// import Button from '../components/Button';
-// import TagInput from '../components/AutoComplete';
-
-const textFieldStyle = {
-  width: 550,
-  position: 'relative',
-};
-
-const tagFieldStyle = {
-  width: 180,
-  position: 'relative',
-};
 
 export default class Input extends Component {
   constructor(props) {
@@ -31,13 +19,24 @@ export default class Input extends Component {
 
   // TODO: ADD AUTOCOMPLETE FOR TAGS
   render() {
+    const styles = {
+      textFieldStyle: {
+        width: 550,
+        position: 'relative',
+      },
+      tagFieldStyle = {
+        width: 180,
+        position: 'relative',
+      },
+    };
+
     return (
       <div>
         <div>
           <TextField
             floatingLabelText="Learnable"
             ref={(c) => this._learnable = c}
-            style={textFieldStyle}
+            style={styles.textFieldStyle}
             multiLine
           />
         </div>
@@ -45,7 +44,7 @@ export default class Input extends Component {
           <TextField
             floatingLabelText="Tags"
             ref={(c) => this._tag = c}
-            style={tagFieldStyle}
+            style={styles.tagFieldStyle}
             multiLine
           />
         </div>

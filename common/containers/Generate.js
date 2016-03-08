@@ -35,25 +35,27 @@ export default class Generate extends Component {
   }
 
   render() {
-    const mainDivStyle = {
-      paddingTop: 50,
-      position: 'absolute',
-      margin: 'auto',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      width: '60%',
-      height: 440,
-    };
-    const questionsDivStyle = {
-      paddingTop: 30,
-      wordBreak: 'break-all',
-      whiteSpace: 'normal',
+    const styles = {
+      mainDivStyle: {
+        paddingTop: 40,
+        position: 'absolute',
+        margin: 'auto',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        width: '60%',
+        height: 440,
+      },
+      questionsDivStyle: {
+        paddingTop: 30,
+        wordBreak: 'break-all',
+        whiteSpace: 'normal',
+      },
     };
 
     return (
-      <div style={mainDivStyle}>
+      <div style={styles.mainDivStyle}>
         <Card>
           <CardTitle title={this.state.tag} />
           <CardText>
@@ -67,7 +69,7 @@ export default class Generate extends Component {
           </CardActions>
         </Card>
         {this.props.questions &&
-          <div style={questionsDivStyle}>
+          <div style={styles.questionsDivStyle}>
             <QuestionsTable
               questions={this.props.questions}
             />

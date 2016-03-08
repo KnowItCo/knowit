@@ -36,13 +36,16 @@ export default class Profile extends Component {
   }
 
   render() {
-    const mainStyle = {
-      fontFamily: 'Roboto',
-      paddingTop: 70,
+    const styles = {
+      mainStyle: {
+        fontFamily: 'Roboto',
+        paddingTop: 70,
+      },
+      inputStyle: {
+        marginBottom: 25,
+      },
     };
-    const inputStyle = {
-      marginBottom: 25,
-    };
+
     return (
       <div className="main-container">
         <div className="row">
@@ -51,8 +54,8 @@ export default class Profile extends Component {
               tags={this.props.tags}
             />
           </div>
-          <div className="col-xs-12 col-sm-6 col-md-8" style={mainStyle}>
-            <div style={inputStyle}>
+          <div className="col-xs-12 col-sm-6 col-md-8" style={styles.mainStyle}>
+            <div style={styles.inputStyle}>
               <Input
                 tags={this.props.tags}
                 addNewLearnable={this.addNewLearnable}

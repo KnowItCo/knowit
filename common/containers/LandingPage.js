@@ -15,14 +15,16 @@ export default class LandingPage extends Component {
   }
 
   render() {
-    const divStyle = {
-      padding: 70,
-      textAlign: 'center',
+    const styles = {
+      divStyle: {
+        padding: 70,
+        textAlign: 'center',
+      },
     };
 
     return (
       <div>
-        <div style={divStyle}>
+        <div style={styles.divStyle}>
           <h1>
             Know everything
           </h1>

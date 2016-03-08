@@ -24,7 +24,7 @@ export default class LeftNavBar extends Component {
   }
 
   render() {
-    const style = {
+    const styles = {
       fontFamily: 'Roboto',
       top: 0,
       zIndex: -0.0000000000000005,
@@ -45,7 +45,7 @@ export default class LeftNavBar extends Component {
       <div>
         <LeftNav
           open={this.state.open}
-          style={style}
+          style={styles}
         >
           {menuItems}
         </LeftNav>

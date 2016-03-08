@@ -6,10 +6,6 @@ export default class TagInput extends Component {
     super(props);
   }
 
-  handleNewRequest() {
-    // TODO
-  }
-
   render() {
     return (
       <AutoComplete
