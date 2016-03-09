@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import LeftNav from 'material-ui/lib/left-nav';
+// import MenuItem from 'material-ui/lib/menus/menu-item';
 import TagItem from './TagItem';
 
 export default class LeftNavBar extends Component {
@@ -63,3 +64,6 @@ LeftNavBar.propTypes = {
   tags: PropTypes.array,
   tagClick: PropTypes.func,
 };
+
+
+// <MenuItem onClick={this.handleTagClickGeneral}>General</MenuItem>

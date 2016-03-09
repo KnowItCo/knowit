@@ -21,6 +21,7 @@ export const NAVIGATE = 'NAVIGATE';
 export const DELETE_LEARNABLE = createRequestType('DELETE_LEARNABLE');
 export const AUTH_CHECK = createRequestType('AUTH_CHECK');
 export const GENERATE_Q = createRequestType('GENERATE_Q');
+export const CHANGE_TAG = 'CHANGE_TAG';
 
 // Return action with payload. Payload defaults to empty object if
 // none passed in
@@ -59,3 +60,5 @@ export const deleteLearnable = {
 };
 
 export const updateRouterState = state => action(UPDATE_ROUTER_STATE, { state });
+
+export const changeTag = tag => action(CHANGE_TAG, { tag });

@@ -37,11 +37,9 @@ export default class Profile extends Component {
   }
 
   tagClick(tag) {
-    console.log(tag);
-    // TODO
-    // const { dispatch } = this.props;
-    // const action = ActionCreators.deleteLearnable.request(learnableid);
-    // dispatch(action);
+    const { dispatch } = this.props;
+    const action = ActionCreators.changeTag(tag);
+    dispatch(action);
   }
 
   render() {
@@ -75,6 +73,7 @@ export default class Profile extends Component {
               learnables={this.props.learnables}
               deleteLearnable={this.deleteLearnable}
               knowItLearnable={this.knowItLearnable}
+              currentTag={this.props.currentTag}
             />
           </div>
         </div>
@@ -88,6 +87,7 @@ Profile.propTypes = {
   location: PropTypes.object,
   params: PropTypes.object,
   learnables: PropTypes.array.isRequired,
+  currentTag: PropTypes.string.isRequired,
   tags: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string,
@@ -100,6 +100,7 @@ function mapStateToProps(state) {
     tags: state.entities.tags === undefined ? ['General'] : state.entities.tags,
     learnables: state.entities.learnables === undefined ? [{ 'id': 1, 'text': 'hello' }] : state.entities.learnables,
     email: state.login.email,
+    currentTag: state.setTagState.currentTag,
   };
 }
 

@@ -103,6 +103,18 @@ function fetchLearnables(state = { learnables: [], fetchingLearnables: false, fe
   }
 }
 
+function setTagState(state = { currentTag: 'All' }, action) {
+  switch (action.type) {
+    case ActionTypes.CHANGE_TAG:
+      return merge({}, state, {
+        currentTag: action.tag,
+      });
+    default:
+      return state;
+  }
+}
+
+
 function generateQs(state = { questions: [], generatingQuestions: false, generatedQuestions: false, error: null }, action) {
   switch (action.type) {
     case ActionTypes.GENERATE_Q.REQUEST:
@@ -130,6 +142,7 @@ function generateQs(state = { questions: [], generatingQuestions: false, generat
 function entities(state = { learnables: {}, tags: [] }, action) {
   if (action.response) {
     const tagsGrouped = groupByTags(action.response.data, 'tags');
+    tagsGrouped.unshift('All');
     return merge({}, state, { learnables: action.response.data, tags: tagsGrouped });
   }
 
@@ -151,6 +164,7 @@ const rootReducer = combineReducers({
   fetchLearnables,
   deleteLearnable,
   generateQs,
+  setTagState,
   router,
   entities,
 });

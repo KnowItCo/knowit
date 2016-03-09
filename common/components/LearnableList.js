@@ -20,7 +20,12 @@ export default class LearnableList extends Component {
 
   render() {
     const { learnables } = this.props;
-    const learnablesList = learnables.map((learnable) => <Learnable key={learnable.id} handleDeleteLearnable={this.handleDeleteLearnable} handleKnowItLearnable={this.handleKnowItLearnable} learnableid={learnable.id} text={learnable.text} tags={learnable.tags} />);
+    const filteredlearnables = learnables.filter((learnable) => {
+      if (learnable.tags[0] === this.props.currentTag || this.props.currentTag === 'All') {
+        return learnable;
+      }
+    });
+    const learnablesList = filteredlearnables.map((learnable) => <Learnable key={learnable.id} handleDeleteLearnable={this.handleDeleteLearnable} handleKnowItLearnable={this.handleKnowItLearnable} learnableid={learnable.id} text={learnable.text} tags={learnable.tags} />);
 
     return (
       <div>
@@ -33,7 +38,8 @@ export default class LearnableList extends Component {
 }
 
 LearnableList.propTypes = {
-  learnables: PropTypes.array,
-  deleteLearnable: PropTypes.func,
-  knowItLearnable: PropTypes.func,
+  learnables: PropTypes.array.isRequired,
+  deleteLearnable: PropTypes.func.isRequired,
+  knowItLearnable: PropTypes.func.isRequired,
+  currentTag: PropTypes.string.isRequired,
 };
