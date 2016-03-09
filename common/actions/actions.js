@@ -22,6 +22,7 @@ export const DELETE_LEARNABLE = createRequestType('DELETE_LEARNABLE');
 export const AUTH_CHECK = createRequestType('AUTH_CHECK');
 export const GENERATE_Q = createRequestType('GENERATE_Q');
 export const CHANGE_TAG = 'CHANGE_TAG';
+export const SIGN_OUT = createRequestType('SIGN_OUT');
 
 // Return action with payload. Payload defaults to empty object if
 // none passed in
@@ -39,6 +40,12 @@ export const checkAuthUser = {
   request: () => action(AUTH_CHECK.REQUEST, { }),
   success: (confirmation) => action(AUTH_CHECK.SUCCESS, { confirmation }),
   failure: (error) => action(AUTH_CHECK.FAILURE, { error }),
+};
+
+export const signOut = {
+  request: () => action(SIGN_OUT.REQUEST, { }),
+  success: (confirmation) => action(SIGN_OUT.SUCCESS, { confirmation }),
+  failure: (error) => action(SIGN_OUT.FAILURE, { error }),
 };
 
 export const getLearnables = {

@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import AppBarTop from '../components/AppBar';
+import MainAppBar from '../components/AppBar';
 import * as ActionCreators from '../actions/actions';
 import LandingPage from './LandingPage';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -9,6 +9,7 @@ injectTapEventPlugin();
 export default class App extends Component {
   constructor(props) {
     super(props);
+    this.signOut = this.signOut.bind(this);
   }
 
   componentWillMount() {
@@ -17,11 +18,20 @@ export default class App extends Component {
     dispatch(action);
   }
 
+  signOut() {
+    if (this.props.isLoggedIn) {
+      const { dispatch } = this.props;
+      const action = ActionCreators.signOut.request();
+      dispatch(action);
+    }
+  }
+
   render() {
     return (
       <div className="main-container">
-        <AppBarTop
+        <MainAppBar
           logo={'Know It'}
+          signOut={this.signOut}
         />
         {!this.props.isLoggedIn &&
           <div>

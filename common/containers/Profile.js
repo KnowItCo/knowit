@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { history } from '../services';
 import * as ActionCreators from '../actions/actions';
 import LearnableList from '../components/LearnableList';
-// import LearnableList2 from '../components/LearnableList2';
 import LeftNavBar from '../components/NavBar';
 import Input from '../components/Input';
 

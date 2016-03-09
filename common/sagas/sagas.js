@@ -5,7 +5,7 @@ import { history, api } from '../services';
 import * as actions from './../actions/actions';
 
 // action creators, each has 3 associated actions (REQUEST, SUCCESS, FAILURE)
-const { getLearnables, addLearnable, deleteLearnable, checkAuthUser, generateQ } = actions;
+const { getLearnables, addLearnable, deleteLearnable, checkAuthUser, generateQ, signOut } = actions;
 
 /* Subroutines */
 
@@ -39,6 +39,15 @@ function* checkAuthSaga(entity, apiCall) {
   }
 }
 
+function* signOutSaga(entity, apiCall) {
+  const { confirmation, error } = yield call(apiCall);
+  if (!error) {
+    yield put(entity.success(confirmation));
+  } else {
+    yield put(entity.failure(error));
+  }
+}
+
 function* deleteLearnableSaga(entity, apiCall, learnableid) {
   const { confirmation, error } = yield call(apiCall, learnableid);
   if (!error) {
@@ -59,6 +68,7 @@ function* generateQSaga(entity, apiCall, learnableid, learnableText) {
 
 const fetchLearnables = fetchEntity.bind(null, getLearnables, api.fetchLearnables);
 const checkAuthAsync = checkAuthSaga.bind(null, checkAuthUser, api.checkAuth);
+const signOutAsync = signOutSaga.bind(null, signOut, api.signOut);
 const addLearnableAsync = addLearnableSaga.bind(null, addLearnable, api.addLearnable);
 const deleteLearnableAsync = deleteLearnableSaga.bind(null, deleteLearnable, api.deleteLearnable);
 const generateQAsync = generateQSaga.bind(null, generateQ, api.generateQ);
@@ -69,6 +79,10 @@ function* loadLearnables() {
 
 function* loadcheckAuth() {
   yield call(checkAuthAsync);
+}
+
+function* loadSignOut() {
+  yield call(signOutAsync);
 }
 
 function* loadAddLearnable(learnable, tags) {
@@ -91,11 +105,21 @@ function* watchCheckAuthRequest() {
   }
 }
 
+// Watch for sign out request
+function* watchSignOutRequest() {
+  while (true) {
+    yield take(actions.SIGN_OUT.REQUEST);
+    yield call(loadSignOut);
+    yield put(actions.updateRouterState('/'));
+    yield history.pushState(null, '/');
+  }
+}
+
 // Fetches login and learnables for a User
 function* watchCheckAuthSuccess() {
   while (true) {
     const { confirmation } = yield take(actions.AUTH_CHECK.SUCCESS);
-    yield call(loadLearnables); // TODO
+    yield call(loadLearnables);
     yield put(actions.updateRouterState('/profile'));
     yield history.pushState(null, '/profile');
   }
@@ -151,6 +175,7 @@ export default function* root(getState) {
   yield fork(watchFailureLogin);
   yield fork(watchCheckAuthRequest);
   yield fork(watchGenerateQ);
+  yield fork(watchSignOutRequest);
   yield fork(watchaddLearnable, getLearnables);
   yield fork(watchdeleteLearnable, getLearnables);
   yield fork(watchCheckAuthSuccess, getLearnables);

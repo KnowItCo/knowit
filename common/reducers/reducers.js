@@ -6,7 +6,7 @@ import { combineReducers } from 'redux';
 // Updates an entity cache in response to any action with response.entities
 // TODO: use with normalizr
 
-function login(state = { isLoggedIn: false, error: null, email: null }, action) {
+function login(state = { isLoggedIn: false, error: null, email: null, isLoggingOut: false }, action) {
   switch (action.type) {
     case ActionTypes.AUTH_CHECK.REQUEST:
       return merge({}, state, {
@@ -24,11 +24,23 @@ function login(state = { isLoggedIn: false, error: null, email: null }, action) 
         error: action.error,
         isLoggedIn: false,
       });
+    case ActionTypes.SIGN_OUT.REQUEST:
+      return merge({}, state, {
+        isLoggingOut: true,
+      });
+    case ActionTypes.SIGN_OUT.SUCCESS:
+      return merge({}, state, {
+        isLoggedIn: false,
+        isLoggingOut: false,
+      });
+    case ActionTypes.SIGN_OUT.FAILURE:
+      return merge({}, state, {
+        error: action.error,
+      });
     default:
       return state;
   }
 }
-
 
 function addLearnable(state = { learnableBeingAdded: false, learnableAdded: false, error: null }, action) {
   switch (action.type) {

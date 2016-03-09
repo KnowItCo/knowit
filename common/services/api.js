@@ -25,7 +25,21 @@ function checkAuthAsync() {
     })
     .then(
       confirmation => ({ confirmation }),
-      error => ({ error: error.message || 'Something shitty happened' })
+      error => ({ error: error.message || 'Login was not successful' })
+    );
+}
+
+function signOutAsync() {
+  return axios('/auth/logout/')
+    .then((response) => {
+      if (response.status >= 400) {
+        throw new Error('Bad response from server');
+      }
+      return response;
+    })
+    .then(
+      confirmation => ({ confirmation }),
+      error => ({ error: error.message || 'Could not sign you out, sorry' })
     );
 }
 
@@ -80,3 +94,4 @@ export const addLearnable = (learnable, tags) => addLearnableAsync(learnable, ta
 export const deleteLearnable = learnableid => deleteLearnableAsync(learnableid);
 export const generateQ = (learnableid, learnableText) => generateQAsync(learnableid, learnableText);
 export const checkAuth = () => checkAuthAsync();
+export const signOut = () => signOutAsync();
