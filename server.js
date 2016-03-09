@@ -16,7 +16,7 @@ var client  = redis.createClient();
 
 // configure Express
 var app = express();
-var port = 8888;
+var port = process.env.PORT || 8888;
 
 var redisOptions = {
   host: 'localhost',
